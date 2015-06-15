@@ -54,4 +54,37 @@ class SalesEngineTest < Minitest::Test
 
     assert expected_transaction, engine.startup
   end
+
+  def test_it_returns_the_first_customer_in_the_repo
+    engine = SalesEngine.new
+    expected = "Joey"
+
+    assert_equal expected, engine.customer_repository.first[:first_name]
+  end
+
+  def test_it_returns_the_first_invoice_in_the_repo
+    engine = SalesEngine.new
+    expected = "shipped"
+
+    assert_equal expected, engine.invoice_repository.first[:status]
+  end
+
+  def test_it_returns_the_first_credit_card_number
+    engine = SalesEngine.new
+    expected = "4654405418249632"
+
+    assert_equal expected, engine.transaction_repository.first[:credit_card_number]
+  end
+
+  def test_it_has_access_to_list_and_search_module
+    assert ListAndSearch
+  end
+
+  def test_it_can_access_all_instances_in_a_repo
+    engine = SalesEngine.new
+    expected = File.foreach("./data/invoices.csv").inject(0) {|c, line|c+1}
+
+    assert_equal expected, engine.invoice_repository.readlines.size + 1
+  end
+
 end
