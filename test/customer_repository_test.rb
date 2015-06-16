@@ -37,8 +37,23 @@ class CustomerRepositoryTest < Minitest::Test
     refute_equal first_customer, second_customer
   end
 
-  def test_it_finds_customers_by_id
-    assert_equal "5", customer_repository.find_by_id(5).id
+  def test_it_finds_customers_by_attribute
+    assert_equal "5", customer_repository.find_by("id", "5").id
   end
 
+  def test_it_finds_customers_by_different_attribute
+    assert_equal "5", customer_repository.find_by("id", "5").id
+  end
+
+  def test_it_finds_all_customers_by_attribute
+    assert_equal 1, customer_repository.find_all_by("first_name", "Cecelia").count
+  end
+
+  def test_it_finds_all_customers_by_different_attribute
+    assert_equal 2, customer_repository.find_all_by("updated_at", "2012-03-27 14:54:11 UTC").count
+  end
+
+  def test_it_finds_all_customers_by_different_attribute
+    assert_equal 2, customer_repository.find_all_by("last_name", "Toy").count
+  end
 end

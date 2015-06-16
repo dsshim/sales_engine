@@ -26,11 +26,12 @@ class CustomerRepository
     customers.sample
   end
 
+  def find_by(attribute, value)
+    customers.detect { |customer| customer.send(attribute) == value }
+  end
 
-  def find_by_id(value)
-    customers.detect do |customer|
-     customer.id.to_i == value
-    end
+  def find_all_by(attribute, value)
+    customers.select { |customer| customer.send(attribute) == value }
   end
 end
 
