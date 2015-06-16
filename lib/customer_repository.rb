@@ -25,4 +25,12 @@ class CustomerRepository
   def random
     customers.sample
   end
+
+
+  def find_by_id(value)
+    customers.detect do |customer|
+     customer.id.to_i == value
+    end
+  end
 end
+

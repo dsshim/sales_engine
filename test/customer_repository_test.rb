@@ -9,6 +9,7 @@ class CustomerRepositoryTest < Minitest::Test
   def setup
     @rows = CSV.open "./data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
     @customer_repository = CustomerRepository.new(rows, sales_engine)
+    @sales_engine = sales_engine
   end
 
   def test_it_loads_on_initialize
@@ -34,6 +35,10 @@ class CustomerRepositoryTest < Minitest::Test
     second_customer = customer_repository.random.first_name
 
     refute_equal first_customer, second_customer
+  end
+
+  def test_it_finds_customers_by_id
+    assert_equal "5", customer_repository.find_by_id(5).id
   end
 
 end
