@@ -37,23 +37,39 @@ class CustomerRepositoryTest < Minitest::Test
     refute_equal first_customer, second_customer
   end
 
-  def test_it_finds_customers_by_attribute
-    assert_equal "5", customer_repository.find_by("id", "5").id
+  def test_it_finds_customers_by_id
+    assert_equal "5", customer_repository.find_by_id("5").id
   end
 
-  def test_it_finds_customers_by_different_attribute
-    assert_equal "5", customer_repository.find_by("id", "5").id
+  def test_it_finds_customers_by_first_name
+    assert_equal "Cecelia", customer_repository.find_by_first_name("Cecelia").first_name
   end
 
-  def test_it_finds_all_customers_by_attribute
-    assert_equal 1, customer_repository.find_all_by("first_name", "Cecelia").count
+  def test_it_finds_customers_by_last_name
+    assert_equal "Osinski", customer_repository.find_by_last_name("Osinski").last_name
   end
 
-  def test_it_finds_all_customers_by_different_attribute
-    assert_equal 2, customer_repository.find_all_by("updated_at", "2012-03-27 14:54:11 UTC").count
+  def test_it_finds_customers_by_date_created
+    assert_equal "2012-03-27 14:54:10 UTC", customer_repository.find_by_date_created("2012-03-27 14:54:10 UTC").created_at
   end
 
-  def test_it_finds_all_customers_by_different_attribute
-    assert_equal 2, customer_repository.find_all_by("last_name", "Toy").count
+  def test_it_finds_customers_by_update_date
+    assert_equal "2012-03-27 14:54:10 UTC", customer_repository.find_by_date_updated("2012-03-27 14:54:10 UTC").updated_at
+  end
+
+  def test_it_finds_all_customers_by_first_name
+    assert_equal 2, customer_repository.find_all_by_first_name("Mariah").count
+  end
+
+  def test_it_finds_all_customers_by_last_name
+    assert_equal 2, customer_repository.find_all_by_last_name("Toy").count
+  end
+
+  def test_it_finds_all_customers_by_date_created
+    assert_equal 7, customer_repository.find_all_by_date_created("2012-03-27 14:54:10 UTC").count
+  end
+
+  def test_it_finds_all_customers_by_date_updated
+    assert_equal 7, customer_repository.find_all_by_date_updated("2012-03-27 14:54:10 UTC").count
   end
 end
