@@ -8,7 +8,6 @@ class ItemRepositoryTest < Minitest::Test
   def setup
     rows = CSV.open "./data/fixtures/item_test.csv", headers: true, header_converters: :symbol
     read_rows = rows.read
-    # sales_engine is nil
     @item_repository = ItemRepository.new(read_rows, sales_engine)
   end
 

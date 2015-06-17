@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/invoice_repository'
+require './lib/invoice_repository'
 
 class InvoiceRepositoryTest < Minitest::Test
 
@@ -8,7 +8,7 @@ class InvoiceRepositoryTest < Minitest::Test
 attr_reader :rows, :sales_engine, :invoice_repository
 
 def setup
-  @rows = CSV.open "../data/fixtures/invoices_test.csv", headers: true, header_converters: :symbol
+  rows = CSV.open "./data/fixtures/invoices_test.csv", headers: true, header_converters: :symbol
   @invoice_repository = InvoiceRepository.new(rows, sales_engine)
   @sales_engine = sales_engine
 end

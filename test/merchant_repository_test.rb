@@ -8,7 +8,7 @@ class MerchantRepositoryTest < Minitest::Test
   attr_reader :sales_engine, :rows, :merchant_repository
 
   def setup
-    @rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
+    rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
     @merchant_repository = MerchantRepository.new(rows, sales_engine)
     @sales_engine = sales_engine
   end

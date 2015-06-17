@@ -1,11 +1,11 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/transaction'
+require './lib/transaction'
 
 class CustomerTest < Minitest::Test
 
   def setup
-    rows = CSV.open "../data/fixtures/transactions_test.csv", headers: true, header_converters: :symbol
+    rows = CSV.open "./data/fixtures/transactions_test.csv", headers: true, header_converters: :symbol
     read_rows = rows.read
     sales_engine = SalesEngine.new
     @transaction = Transaction.new(read_rows, sales_engine.transaction_repository)
