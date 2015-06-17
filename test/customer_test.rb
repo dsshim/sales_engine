@@ -12,7 +12,7 @@ class CustomerTest < Minitest::Test
     @customer = Customer.new(read_rows, customer_repository)
   end
 
-  def test_it_receives_data_at_initilaize
+  def test_it_receives_data_at_initialize
     assert_equal 10, @customer.first_name.count
     assert_equal "Joey", @customer.first_name.first
   end

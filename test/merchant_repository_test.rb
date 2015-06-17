@@ -5,7 +5,7 @@ require 'csv'
 
 class MerchantRepositoryTest < Minitest::Test
 
-  attr_reader :sales_engine, :rows, :merchant_repository
+  attr_reader :sales_engine, :merchant_repository
 
   def setup
     rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
@@ -15,7 +15,6 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_loads_data_on_initialize
     assert merchant_repository
-    assert rows
   end
 
   def test_it_instantiates_the_merchants_when_initiliazed
