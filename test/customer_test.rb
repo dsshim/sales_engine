@@ -4,16 +4,29 @@ require './lib/customer'
 
 class CustomerTest < Minitest::Test
 
+ attr_reader :data
+
   def setup
-    rows = CSV.open "./data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
-    read_rows = rows.read
-    sales_engine = SalesEngine.new
-    customer_repository = sales_engine.customer_repository
-    @customer = Customer.new(read_rows, customer_repository)
+    @data = {
+      id: "1",
+      first_name: "Joey",
+      last_name: "Ondricka",
+      created_at: "2012-03-27 14:53:59 UTC",
+      updated_at: "2012-03-27 14:53:59 UTC"
+    }
   end
 
   def test_it_receives_data_at_initialize
-    assert_equal 10, @customer.first_name.count
-    assert_equal "Joey", @customer.first_name.first
+    customer = Customer.new(data, nil)
+    assert_equal "1", customer.id
+    assert_equal "Joey", customer.first_name
+  end
+
+  def test_it_returns_a_collection_of_invoices
+    repository = Minitest::Mock.new
+    customer = Customer.new(data, repository)
+    repository.expect(:find_invoices_by_id, nil, ["1"])
+    customer.invoices
+    repository.verify
   end
 end

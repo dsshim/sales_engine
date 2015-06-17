@@ -17,4 +17,8 @@ class Customer
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
+
+  def invoices
+    repository.find_invoices_by_id(id)
+  end
 end
