@@ -4,12 +4,12 @@ require './lib/customer_repository'
 
 class CustomerRepositoryTest < Minitest::Test
 
-  attr_reader :rows, :sales_engine, :customer_repository, :customers
+  attr_reader :sales_engine, :customer_repository
 
   def setup
-    @rows = CSV.open "./data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
+    rows = CSV.open "./data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
+    # @sales_engine = sales_engine This is nil, should it be initilaized?
     @customer_repository = CustomerRepository.new(rows, sales_engine)
-    @sales_engine = sales_engine
   end
 
   def test_it_loads_on_initialize
