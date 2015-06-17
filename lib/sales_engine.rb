@@ -1,31 +1,20 @@
 require 'csv'
-require_relative 'merchant'
 require_relative 'merchant_repository'
-require_relative 'customer'
 require_relative 'customer_repository'
-require_relative 'invoice'
 require_relative 'invoice_repository'
-require_relative 'invoice_item'
 require_relative 'invoice_item_repository'
-require_relative 'item'
 require_relative 'item_repository'
-require_relative 'transaction'
 require_relative 'transaction_repository'
 
 class SalesEngine
 
-  attr_reader :customers_repository,
+  attr_accessor :customer_repository,
               :merchant_repository,
               :invoice_repository,
               :invoice_items_repository,
               :item_repository,
               :transaction_repository
-              :customer_rows
-              :merchant_rows
-              :invoice_rows
-              :invoice_item_rows
-              :item_rows
-              :transaction_rows
+
 
   def initialize
     @customer_repository = CustomerRepository.new(customer_rows, self)
@@ -36,37 +25,28 @@ class SalesEngine
     @transaction_repository = TransactionRepository.new(transaction_rows, self)
   end
 
-  # def startup #CustomerRepository.new(rows, self = SE)
-  #   customer_repository
-  #   merchant_repository
-  #   invoice_repository
-  #   invoice_items_repository
-  #   item_repository
-  #   transaction_repository
-  # end
-
   def customer_rows #here we need to instantiate customer_repo class
-   @customer_rows ||= CSV.open "./data/customers.csv", headers: true, header_converters: :symbol
+   customer_rows ||= CSV.open "./data/customers.csv", headers: true, header_converters: :symbol
   end
 
   def merchant_rows
-    @merchant_rows ||= CSV.open "./data/merchants.csv", headers: true, header_converters: :symbol
+    merchant_rows ||= CSV.open "./data/merchants.csv", headers: true, header_converters: :symbol
   end
 
   def invoice_rows
-    @invoice_rows ||= CSV.open "./data/invoices.csv", headers: true, header_converters: :symbol
+    invoice_rows ||= CSV.open "./data/invoices.csv", headers: true, header_converters: :symbol
   end
 
   def invoice_item_rows
-    @invoice_item_rows ||= CSV.open "./data/invoice_items.csv", headers: true, header_converters: :symbol
+    invoice_item_rows ||= CSV.open "./data/invoice_items.csv", headers: true, header_converters: :symbol
   end
 
   def item_rows
-    @item_rows ||= CSV.open "./data/items.csv", headers: true, header_converters: :symbol
+    item_rows ||= CSV.open "./data/items.csv", headers: true, header_converters: :symbol
   end
 
   def transaction_rows
-    @transaction_rows ||= CSV.open "./data/transactions.csv", headers: true, header_converters: :symbol
+    transaction_rows ||= CSV.open "./data/transactions.csv", headers: true, header_converters: :symbol
   end
 end
 
