@@ -25,6 +25,10 @@ class TransactionRepository
     transactions.sample
   end
 
+  def find_invoices_by_id(id)
+    sales_engine.find_invoices_by_id(id)
+  end
+
   def find_by_id(id)
     transactions.detect { |transaction| transaction.id == id }
   end

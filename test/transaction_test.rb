@@ -4,15 +4,31 @@ require './lib/transaction'
 
 class CustomerTest < Minitest::Test
 
+    attr_reader :data
+
   def setup
-    rows = CSV.open "./data/fixtures/transactions_test.csv", headers: true, header_converters: :symbol
-    read_rows = rows.read
-    sales_engine = SalesEngine.new
-    @transaction = Transaction.new(read_rows, sales_engine.transaction_repository)
+    @data = {
+      id: "1",
+      invoice_id: "2",
+      credit_card_number: "4654405418249632",
+      credit_card_expiration_date: "",
+      result: "success",
+      created_at: "2012-03-27 14:54:09 UTC",
+      updated_at: "2012-03-27 14:54:10 UTC"
+    }
   end
 
   def test_it_receives_data_at_initialize
-    assert_equal "4654405418249632", @transaction.credit_card_number.first
-    assert_equal "success", @transaction.result.first
+    transaction = Transaction.new(data, nil)
+    assert_equal "4654405418249632", transaction.credit_card_number
+    assert_equal "success", transaction.result
+  end
+
+  def test_it_returns_a_collection_of_invoices
+    repository = Minitest::Mock.new
+    transaction = Transaction.new(data, repository)
+    repository.expect(:find_invoices_by_id, nil, ["1"])
+    transaction.invoices
+    repository.verify
   end
 end
