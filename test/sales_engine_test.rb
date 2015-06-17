@@ -31,7 +31,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_it_loads_invoice_item_dependencies_on_initialize
     engine = SalesEngine.new
-    expected_invoice_item = engine.invoice_item_rows
+    expected_invoice_item = engine.invoice_items_rows
 
     assert expected_invoice_item, engine
   end
