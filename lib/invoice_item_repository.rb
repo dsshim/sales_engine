@@ -8,7 +8,7 @@ class InvoiceItemRepository
 
   def initialize(rows, sales_engine)
     @sales_engine = sales_engine
-    @rows = rows.read
+    @rows = rows
     @invoice_items = []
     invoice_item_parser
   end

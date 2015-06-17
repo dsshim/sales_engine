@@ -3,10 +3,10 @@ require_relative 'merchant'
 
 class MerchantRepository
 
-  attr_reader :rows, :merchants
+  attr_reader :rows, :merchants, :sales_engine
 
   def initialize(rows, sales_engine)
-    @rows = rows.read
+    @rows = rows
     @sales_engine = sales_engine
     @merchants = merchant_parser
   end
@@ -21,6 +21,10 @@ class MerchantRepository
 
   def random
     merchants.sample
+  end
+
+  def find_items_by_merchant_id(merchant_id)
+    sales_engine.find_items_by_merchant_id(merchant_id)
   end
 
   def find_by_id(id)
