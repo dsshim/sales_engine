@@ -8,12 +8,11 @@ class MerchantRepository
   def initialize(rows, sales_engine)
     @rows = rows.read
     @sales_engine = sales_engine
-    @merchants = []
-    merchant_parser
+    @merchants = merchant_parser
   end
 
   def merchant_parser
-    @merchants = rows.map { |row| Merchant.new(row, self) }
+    rows.map { |row| Merchant.new(row, self) }
   end
 
   def all

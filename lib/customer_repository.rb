@@ -9,12 +9,11 @@ class CustomerRepository
   def initialize(rows, sales_engine)
     @sales_engine = sales_engine
     @rows = rows.read
-    @customers = []
-    customer_parser
+    @customers = customer_parser
   end
 
   def customer_parser
-    @customers = rows.map { |row| Customer.new(row, self) }
+    rows.map { |row| Customer.new(row, self) }
   end
 
   def all
@@ -61,4 +60,3 @@ class CustomerRepository
     customers.select { |customer| customer.updated_at == updated_at }
   end
 end
-
