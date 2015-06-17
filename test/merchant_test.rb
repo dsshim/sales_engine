@@ -5,22 +5,51 @@ require './lib/merchant'
 
 class MerchantTest < Minitest::Test
 
-  attr_reader :sales_engine, :rows, :merchant_repository, :merchant
+  attr_reader :data, :sales_engine
 
   def setup
-    # rows = CSV.read "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
-    @sales_engine ||= SalesEngine.new
-    @merchant_repository = sales_engine.merchant_repository
-    @merchant = merchant_repository.merchants
+    @data = {
+      id: "1",
+      name: "Schroeder-Jerde",
+      created_at: "2012-03-27 14:53:59 UTC",
+      updated_at: "2012-03-27 14:53:59 UTC"
+    }
   end
 
-  def test_it_receives_data_at_initialize
-    assert_equal 39, merchant.name.count
-    assert_equal "Schroeder-Jerde", merchant.name.first
+  def test_it_receives_its_id_at_initialize
+    merchant = Merchant.new(data, nil)
+    assert_equal "1", merchant.id
+  end
+
+  def test_it_receives_its_name_at_initialize
+    merchant = Merchant.new(data, nil)
+    assert_equal "Schroeder-Jerde", merchant.name
+  end
+
+  def test_it_receives_its_creation_date_at_initialize
+    merchant = Merchant.new(data, nil)
+    assert_equal "2012-03-27 14:53:59 UTC", merchant.created_at
+  end
+
+  def test_it_receives_its_update_date_at_initialize
+    merchant = Merchant.new(data, nil)
+    assert_equal "2012-03-27 14:53:59 UTC", merchant.updated_at
   end
 
   def test_it_returns_a_collection_of_items_associated_with_merchant_id
-    assert_equal 4, merchant.merchant_items(4).count
+    repository = Minitest::Mock.new
+    merchant = Merchant.new(data, repository)
+    repository.expect(:find_items_by_merchant_id, nil, ["1"])
+    merchant.items
+    repository.verify
+  end
+
+  def test_it_returns_a_collection_of_invoices_with_merchant_id
+    repository = Minitest::Mock.new
+    merchant = Merchant.new(data, repository)
+    repository.expect(:find_invoices_by_merchant_id, nil, ["1"])
+    merchant.invoices
+    repository.verify
   end
 end
 

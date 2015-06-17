@@ -24,16 +24,11 @@ class SalesEngine
               :transaction_rows
 
   def initialize
-    @customer_rows = CSVParser.customer_rows
-    @merchant_rows = CSVParser.merchant_rows
-    @invoice_rows = CSVParser.invoice_rows
-    @invoice_items_rows = CSVParser.invoice_items_rows
-    @item_rows = CSVParser.item_rows
-    @transaction_rows = CSVParser.transaction_rows
     startup
   end
 
   def startup
+    parse_data
     @customer_repository = CustomerRepository.new(customer_rows, self)
     @merchant_repository = MerchantRepository.new(merchant_rows, self)
     @invoice_repository = InvoiceRepository.new(invoice_rows, self)
@@ -42,8 +37,21 @@ class SalesEngine
     @transaction_repository = TransactionRepository.new(transaction_rows, self)
   end
 
-  def find_all_by_merchant_id(merchant_id)
-    item_repository.find_items_by_merchant_id(merchant_id)
+  def parse_data
+    @customer_rows = CSVParser.customer_rows
+    @merchant_rows = CSVParser.merchant_rows
+    @invoice_rows = CSVParser.invoice_rows
+    @invoice_items_rows = CSVParser.invoice_items_rows
+    @item_rows = CSVParser.item_rows
+    @transaction_rows = CSVParser.transaction_rows
+  end
+
+  def find_items_by_merchant_id(merchant_id)
+    item_repository.find_all_by_merchant_id(merchant_id)
+  end
+
+  def find_invoices_by_merchant_id(merchant_id)
+    invoice_repository.find_all_by_merchant_id(merchant_id)
   end
 end
 
