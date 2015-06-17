@@ -8,7 +8,7 @@ class CustomerRepository
 
   def initialize(rows, sales_engine)
     @sales_engine = sales_engine
-    @rows = rows.read
+    @rows = rows
     @customers = customer_parser
   end
 
