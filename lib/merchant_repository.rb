@@ -6,7 +6,7 @@ class MerchantRepository
   attr_reader :rows, :merchants
 
   def initialize(rows, sales_engine)
-    @rows = rows
+    @rows = rows.read
     @sales_engine = sales_engine
     @merchants = []
     merchant_parser
