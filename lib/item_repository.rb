@@ -23,6 +23,14 @@ class ItemRepository
     items.sample
   end
 
+  def find_items_by_id(id)
+    sales_engine.find_items_by_id(id)
+  end
+
+  def find_merchants_by_id(id)
+    sales_engine.find_merchants_by_id(id)
+  end
+
   def find_by_id(id)
     items.detect { |item| item.id == id }
   end
