@@ -1,13 +1,13 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/customer_repository'
+require '../lib/customer_repository'
 
 class CustomerRepositoryTest < Minitest::Test
 
   attr_reader :rows, :sales_engine, :customer_repository, :customers
 
   def setup
-    @rows = CSV.open "./data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
+    @rows = CSV.open "../data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
     @customer_repository = CustomerRepository.new(rows, sales_engine)
     @sales_engine = sales_engine
   end
