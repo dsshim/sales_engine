@@ -1,7 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/item_repository'
-
+require "minitest/autorun"
+require "minitest/pride"
+require "./lib/item_repository"
 class ItemRepositoryTest < Minitest::Test
 
   attr_reader :item_repository, :sales_engine
@@ -9,7 +8,7 @@ class ItemRepositoryTest < Minitest::Test
   def setup
     rows = CSV.open "./data/fixtures/item_test.csv", headers: true, header_converters: :symbol
     read_rows = rows.read
-    #sales_engine is nil
+    # sales_engine is nil
     @item_repository = ItemRepository.new(read_rows, sales_engine)
   end
 
@@ -72,16 +71,16 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal date, item_repository.find_by_date_updated("2012-03-27 14:53:59 UTC").updated_at
   end
 
-  def test_it_finds_all_items_by_name #do we need to have this method?
+  def test_it_finds_all_items_by_name # do we need to have this method?
     assert_equal 1, item_repository.find_all_by_name("Item Dolor Odio").count
   end
 
-  def test_it_finds_all_items_by_description #do we need this?
+  def test_it_finds_all_items_by_description # do we need this?
     description = "Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro."
     assert_equal 1, item_repository.find_all_by_description(description).count
   end
 
-  def test_it_finds_all_items_by_unit_price #do we need this?
+  def test_it_finds_all_items_by_unit_price # do we need this?
     assert_equal 1, item_repository.find_all_by_unit_price("31163").count
   end
 

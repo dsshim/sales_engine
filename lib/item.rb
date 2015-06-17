@@ -1,5 +1,4 @@
 require_relative 'item_repository'
-
 class Item
 
   attr_reader :id,

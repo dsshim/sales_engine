@@ -1,7 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/item'
-
+require "minitest/autorun"
+require "minitest/pride"
+require "./lib/item"
 class ItemTest < Minitest::Test
 
   def setup
@@ -16,5 +15,4 @@ class ItemTest < Minitest::Test
     assert_equal 40, @items.name.count
     assert_equal "Item Qui Esse", @items.name.first
   end
-
 end
