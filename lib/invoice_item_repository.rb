@@ -25,6 +25,14 @@ class InvoiceItemRepository
     invoice_items.sample
   end
 
+  def find_invoice_items_by_invoice_id(id)
+    sales_engine.find_invoice_items_by_invoice_id(id)
+  end
+
+  def find_invoice_items_by_item_id(id)
+    sales_engine.find_invoice_items_by_item_id(id)
+  end
+
   def find_by_id(id)
     invoice_items.detect { |invoice_item| invoice_item.id == id }
   end

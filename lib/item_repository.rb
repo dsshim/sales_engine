@@ -51,6 +51,10 @@ class ItemRepository
     items.detect { |item| item.updated_at == updated_at }
   end
 
+  def find_all_by_id(id)
+    items.select { |item| item.id == id }
+  end
+
   def find_all_by_name(name)
     items.select { |item| item.name == name }
   end

@@ -16,4 +16,12 @@ class InvoiceItem
     @updated_at = row[:updated_at]
   end
 
+  def invoices
+    repository.find_invoice_items_by_invoice_id(id)
+  end
+
+  def items
+    repository.find_invoice_items_by_item_id(id)
+  end
+
 end

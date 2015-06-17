@@ -69,6 +69,10 @@ class InvoiceRepository
     invoices.detect { |invoice| invoice.updated_at == updated_at }
   end
 
+  def find_all_by_id(id)
+    invoices.select { |invoice| invoice.id == id }
+  end
+
   def find_all_by_customer_id(customer_id)
     invoices.select { |invoice| invoice.customer_id == customer_id }
   end
