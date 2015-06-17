@@ -15,35 +15,35 @@ class SalesEngineTest < Minitest::Test
     assert expected_customer, engine
   end
 
-  def test_it_loads_merchant_dependencies_on_initialize
+  def test_it_loads_merchant_dependencies_on_startup
     engine = SalesEngine.new
     expected_merchant = engine.merchant_rows
 
     assert expected_merchant, engine
   end
 
-  def test_it_loads_invoice_dependencies_on_initialize
+  def test_it_loads_invoice_dependencies_on_startup
     engine = SalesEngine.new
     expected_invoice = engine.invoice_rows
 
     assert expected_invoice, engine
   end
 
-  def test_it_loads_invoice_item_dependencies_on_initialize
+  def test_it_loads_invoice_item_dependencies_on_startup
     engine = SalesEngine.new
     expected_invoice_item = engine.invoice_items_rows
 
     assert expected_invoice_item, engine
   end
 
-  def test_it_loads_item_dependencies_on_initialize
+  def test_it_loads_item_dependencies_on_startup
     engine = SalesEngine.new
     expected_item = engine.item_rows
 
     assert expected_item, engine
   end
 
-  def test_it_loads_transaction_dependencies_on_initialize
+  def test_it_loads_transaction_dependencies_on_startup
     engine = SalesEngine.new
     expected_transaction = engine.transaction_rows
 
