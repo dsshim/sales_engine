@@ -47,6 +47,10 @@ class MerchantRepository
     merchants.detect { |merchant| merchant.updated_at == updated_at }
   end
 
+  def find_all_by_id(id)
+    merchants.select { |merchant| merchant.id == id }
+  end
+
   def find_all_by_name(name)
     merchants.select { |merchant| merchant.name == name }
   end

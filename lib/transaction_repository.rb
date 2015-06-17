@@ -59,6 +59,10 @@ class TransactionRepository
     transactions.detect { |transaction| transaction.updated_at == updated_at }
   end
 
+  def find_all_by_invoice_id(invoice_id) #add test in trans_repo_test
+    transactions.select { |transaction| transaction.invoice_id == invoice_id }
+  end
+
   def find_all_by_credit_card_number(credit_card)
     transactions.select { |transaction| transaction.credit_card_number == credit_card }
   end

@@ -4,15 +4,62 @@ require './lib/invoice'
 
 class InvoiceTest < Minitest::Test
 
+  attr_reader :data
+
   def setup
-    rows = CSV.open "./data/fixtures/invoices_test.csv", headers: true, header_converters: :symbol
-    read_rows = rows.read
-    sales_engine = SalesEngine.new
-    @invoice = Invoice.new(read_rows, sales_engine.customer_repository)
+    @data = {
+      id: "1",
+      customer_id: "2",
+      merchant_id: "41",
+      status: "shipped",
+      created_at: "2012-03-25 09:54:09 UTC",
+      updated_at: "2012-03-25 09:54:09 UTC"
+    }
   end
 
   def test_it_receives_data_at_initilaize
-    assert_equal 50, @invoice.customer_id.count
-    assert_equal "26", @invoice.merchant_id.first
+    invoice = Invoice.new(data, nil)
+    assert_equal "2", invoice.customer_id
+    assert_equal "41", invoice.merchant_id
+  end
+
+  def test_it_returns_a_collecton_of_transactions
+    repository = Minitest::Mock.new
+    invoice = Invoice.new(data, repository)
+    repository.expect(:find_invoices_by_id, nil, ["1"])
+    invoice.transactions
+    repository.verify
+  end
+
+  def test_it_returns_a_collection_of_invoice_items
+    repository = Minitest::Mock.new
+    invoice = Invoice.new(data, repository)
+    repository.expect(:find_invoice_items_by_id, nil, ["1"])
+    invoice.invoice_items
+    repository.verify
+  end
+
+  def test_it_returns_a_collection_of_items_through_invoice_items
+    repository = Minitest::Mock.new
+    invoice = Invoice.new(data, repository)
+    repository.expect(:find_items_by_invoice_item, nil, ["1"])
+    invoice.items
+    repository.verify
+  end
+
+  def test_it_returns_a_collection_of_customers
+    repository = Minitest::Mock.new
+    invoice = Invoice.new(data, repository)
+    repository.expect(:find_invoices_by_customer_id, nil, ["1"])
+    invoice.customers
+    repository.verify
+  end
+
+  def test_it_returns_a_collection_of_merchants
+    repository = Minitest::Mock.new
+    invoice = Invoice.new(data, repository)
+    repository.expect(:find_invoices_by_merchant_id, nil, ["1"])
+    invoice.merchants
+    repository.verify
   end
 end

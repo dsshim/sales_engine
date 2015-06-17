@@ -44,6 +44,10 @@ class CustomerRepository
     customers.detect { |customer| customer.updated_at == updated_at }
   end
 
+  def find_all_by_customer_id(id)
+    customers.select { |customer| customer.id == id }
+  end
+
   def find_all_by_first_name(first_name)
     customers.select { |customer| customer.first_name == first_name }
   end
