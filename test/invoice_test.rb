@@ -26,7 +26,7 @@ class InvoiceTest < Minitest::Test
   def test_it_returns_a_collecton_of_transactions
     repository = Minitest::Mock.new
     invoice = Invoice.new(data, repository)
-    repository.expect(:find_invoices_by_id, nil, ["1"])
+    repository.expect(:find_invoices_by_invoice_id, nil, ["1"])
     invoice.transactions
     repository.verify
   end
@@ -34,7 +34,7 @@ class InvoiceTest < Minitest::Test
   def test_it_returns_a_collection_of_invoice_items
     repository = Minitest::Mock.new
     invoice = Invoice.new(data, repository)
-    repository.expect(:find_invoice_items_by_id, nil, ["1"])
+    repository.expect(:find_items_by_invoice_id_thru_invoice_items, nil, ["1"])
     invoice.invoice_items
     repository.verify
   end
@@ -58,7 +58,7 @@ class InvoiceTest < Minitest::Test
   def test_it_returns_a_collection_of_merchants
     repository = Minitest::Mock.new
     invoice = Invoice.new(data, repository)
-    repository.expect(:find_invoices_by_merchant_id, nil, ["1"])
+    repository.expect(:find_merchant_invoices_by_id, nil, ["1"])
     invoice.merchants
     repository.verify
   end

@@ -15,11 +15,11 @@ class Invoice
   end
 
   def transactions
-    repository.find_invoices_by_id(id)
+    repository.find_invoices_by_invoice_id(id)
   end
 
   def invoice_items
-    repository.find_invoice_items_by_id(id)
+    repository.find_items_by_invoice_id_thru_invoice_items(id)
   end
 
   def items
@@ -31,6 +31,6 @@ class Invoice
   end
 
   def merchants
-    repository.find_invoices_by_merchant_id(id)
+    repository.find_merchant_invoices_by_id(id)
   end
 end

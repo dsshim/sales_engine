@@ -25,12 +25,12 @@ class InvoiceRepository
     invoices.sample
   end
 
-  def find_invoices_by_id(id)
-    sales_engine.find_invoices_by_id(id)
+  def find_invoices_by_invoice_id(id)
+    sales_engine.find_invoices_by_invoice_id(id)
   end
 
   def find_invoice_items_by_id(id)
-    sales_engine.find_invoice_items_by_id(id)
+    sales_engine.find_items_by_invoice_id_thru_invoice_items(id)
   end
 
   def find_items_by_invoice_item(id)
@@ -41,8 +41,8 @@ class InvoiceRepository
     sales_engine.find_invoices_by_customer_id(id)
   end
 
-  def find_invoices_by_merchant_id(id)
-    sales_engine.find_invoices_by_merchant_id(id)
+  def find_merchant_invoices_by_id(id)
+    sales_engine.find_merchant_invoices_by_id(id)
   end
 
   def find_by_id(id)
