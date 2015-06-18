@@ -41,7 +41,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_merchants_by_id
-    assert_equal "10", merchant_repository.find_by_id("10").id
+    assert_equal 10, merchant_repository.find_by_id(10).id
   end
 
   def test_it_finds_merchants_by_name

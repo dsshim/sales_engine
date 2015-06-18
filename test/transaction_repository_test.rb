@@ -38,15 +38,15 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_transactions_by_id
-    assert_equal "5", transaction_repository.find_by_id("5").id
+    assert_equal 5, transaction_repository.find_by_id(5).id
   end
 
   def test_it_finds_transactions_by_invoice_id
-    assert_equal "5", transaction_repository.find_by_invoice_id("5").invoice_id
+    assert_equal 5, transaction_repository.find_by_invoice_id(5).invoice_id
   end
 
   def test_it_finds_transactions_by_credit_card_number
-    assert_equal "4738848761455352", transaction_repository.find_by_credit_card_number("4738848761455352").credit_card_number
+    assert_equal 4738848761455352, transaction_repository.find_by_credit_card_number(4738848761455352).credit_card_number
   end
 
   def test_it_finds_transactions_by_expiration_date
@@ -66,7 +66,7 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_all_transactions_by_credit_card_number
-    assert_equal 1, transaction_repository.find_all_by_credit_card_number("4800749911485986").count
+    assert_equal 1, transaction_repository.find_all_by_credit_card_number(4800749911485986).count
   end
 
   def test_it_finds_all_transactions_by_expiration_date

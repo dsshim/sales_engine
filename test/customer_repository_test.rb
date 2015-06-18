@@ -37,7 +37,7 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_customers_by_id
-    assert_equal "5", customer_repository.find_by_id("5").id
+    assert_equal 5, customer_repository.find_by_id(5).id
   end
 
   def test_it_finds_customers_by_first_name

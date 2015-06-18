@@ -1,5 +1,5 @@
 require_relative 'customer_repository'
-
+require 'pry'
 class Customer
 
   attr_reader :id,
@@ -11,7 +11,7 @@ class Customer
 
   def initialize(row, repo)
     @repository = repo
-    @id = row[:id]
+    @id = row[:id].to_i
     @first_name = row[:first_name]
     @last_name = row[:last_name]
     @created_at = row[:created_at]

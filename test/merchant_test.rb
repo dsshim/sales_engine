@@ -9,7 +9,7 @@ class MerchantTest < Minitest::Test
 
   def setup
     @data = {
-      id: "1",
+      id: 1,
       name: "Schroeder-Jerde",
       created_at: "2012-03-27 14:53:59 UTC",
       updated_at: "2012-03-27 14:53:59 UTC"
@@ -18,7 +18,7 @@ class MerchantTest < Minitest::Test
 
   def test_it_receives_its_id_at_initialize
     merchant = Merchant.new(data, nil)
-    assert_equal "1", merchant.id
+    assert_equal 1, merchant.id
   end
 
   def test_it_receives_its_name_at_initialize
@@ -39,7 +39,7 @@ class MerchantTest < Minitest::Test
   def test_it_returns_a_collection_of_items_associated_with_merchant_id
     repository = Minitest::Mock.new
     merchant = Merchant.new(data, repository)
-    repository.expect(:find_items_by_merchant_id, nil, ["1"])
+    repository.expect(:find_items_by_merchant_id, nil, [1])
     merchant.items
     repository.verify
   end
@@ -47,7 +47,7 @@ class MerchantTest < Minitest::Test
   def test_it_returns_a_collection_of_invoices_with_merchant_id
     repository = Minitest::Mock.new
     merchant = Merchant.new(data, repository)
-    repository.expect(:find_invoices_by_merchant_id, nil, ["1"])
+    repository.expect(:find_invoices_by_merchant_id, nil, [1])
     merchant.invoices
     repository.verify
   end

@@ -25,7 +25,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_has_access_to_other_types_of_data
-    assert_equal "1", item_repository.items.first.merchant_id
+    assert_equal 1, item_repository.items.first.merchant_id
   end
 
   def test_it_finds_all_items
@@ -40,7 +40,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_items_by_id
-    assert_equal "1", item_repository.find_by_id("1").id
+    assert_equal 1, item_repository.find_by_id(1).id
   end
 
   def test_it_finds_items_by_name
@@ -53,11 +53,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_items_by_unit_price
-    assert_equal "75107", item_repository.find_by_unit_price("75107").unit_price
+    assert_equal 75107, item_repository.find_by_unit_price(75107).unit_price
   end
 
   def test_it_finds_items_by_merchant_id
-    assert_equal "1", item_repository.find_by_merchant_id("1").merchant_id
+    assert_equal 1, item_repository.find_by_merchant_id(1).merchant_id
   end
 
   def test_it_finds_items_by_date_created
@@ -80,11 +80,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_all_items_by_unit_price # do we need this?
-    assert_equal 1, item_repository.find_all_by_unit_price("31163").count
+    assert_equal 1, item_repository.find_all_by_unit_price(31163).count
   end
 
   def test_it_finds_all_items_by_merchant_id
-    assert_equal 15, item_repository.find_all_by_merchant_id("1").count
+    assert_equal 15, item_repository.find_all_by_merchant_id(1).count
   end
 
   def test_it_finds_all_items_by_date_created

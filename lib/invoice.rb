@@ -6,9 +6,9 @@ class Invoice
 
   def initialize(row, repo)
     @repository = repo
-    @id = row[:id]
-    @customer_id = row[:customer_id]
-    @merchant_id = row[:merchant_id]
+    @id = row[:id].to_i
+    @customer_id = row[:customer_id].to_i
+    @merchant_id = row[:merchant_id].to_i
     @status = row[:status]
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]

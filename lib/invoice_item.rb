@@ -7,11 +7,11 @@ class InvoiceItem
 
   def initialize(row, repo)
     @repository = repo
-    @id = row[:id]
-    @item_id = row[:item_id]
-    @invoice_id = row[:invoice_id]
-    @quantity = row[:quantity]
-    @unit_price = row[:unit_price]
+    @id = row[:id].to_i
+    @item_id = row[:item_id].to_i
+    @invoice_id = row[:invoice_id].to_i
+    @quantity = row[:quantity].to_i
+    @unit_price = row[:unit_price].to_i
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end

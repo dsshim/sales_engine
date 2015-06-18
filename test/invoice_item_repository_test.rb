@@ -22,7 +22,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_has_access_to_the_data
-    first_item_id = "539"
+    first_item_id = 539
     assert_equal first_item_id, invoice_item_repository.invoice_items.first.item_id
   end
 
@@ -38,23 +38,23 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_invoice_item_by_id
-    assert_equal "5", invoice_item_repository.find_by_id("5").id
+    assert_equal 5, invoice_item_repository.find_by_id(5).id
   end
 
   def test_it_finds_invoice_item_by_item_id
-    assert_equal "523", invoice_item_repository.find_by_item_id("523").item_id
+    assert_equal 523, invoice_item_repository.find_by_item_id(523).item_id
   end
 
   def test_it_finds_invoice_item_by_invoice_id
-    assert_equal "1", invoice_item_repository.find_by_invoice_id("1").invoice_id
+    assert_equal 1, invoice_item_repository.find_by_invoice_id(1).invoice_id
   end
 
   def test_it_finds_invoice_item_by_quantity
-    assert_equal "9", invoice_item_repository.find_by_quantity("9").quantity
+    assert_equal 9, invoice_item_repository.find_by_quantity(9).quantity
   end
 
   def test_it_finds_invoice_item_by_unit_price
-    assert_equal "34873", invoice_item_repository.find_by_unit_price("34873").unit_price
+    assert_equal 34873, invoice_item_repository.find_by_unit_price(34873).unit_price
   end
 
   def test_it_finds_invoice_item_by_date_created
@@ -66,19 +66,19 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_all_invoice_items_by_item_id
-    assert_equal 3, invoice_item_repository.find_all_by_item_id("1918").count
+    assert_equal 3, invoice_item_repository.find_all_by_item_id(1918).count
   end
 
   def test_it_finds_all_invoice_items_by_invoice_id
-    assert_equal 4, invoice_item_repository.find_all_by_invoice_id("2").count
+    assert_equal 4, invoice_item_repository.find_all_by_invoice_id(2).count
   end
 
   def test_it_finds_all_invoice_items_by_quantity
-    assert_equal 4, invoice_item_repository.find_all_by_quantity("7").count
+    assert_equal 4, invoice_item_repository.find_all_by_quantity(7).count
   end
 
   def test_it_finds_all_invoice_items_by_unit_price
-    assert_equal 2, invoice_item_repository.find_all_by_unit_price("50051").count
+    assert_equal 2, invoice_item_repository.find_all_by_unit_price(50051).count
   end
 
   def test_it_finds_all_customers_by_date_created

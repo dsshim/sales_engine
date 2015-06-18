@@ -8,7 +8,7 @@ class CustomerTest < Minitest::Test
 
   def setup
     @data = {
-      id: "1",
+      id: 1,
       first_name: "Joey",
       last_name: "Ondricka",
       created_at: "2012-03-27 14:53:59 UTC",
@@ -18,14 +18,14 @@ class CustomerTest < Minitest::Test
 
   def test_it_receives_data_at_initialize
     customer = Customer.new(data, nil)
-    assert_equal "1", customer.id
+    assert_equal 1, customer.id
     assert_equal "Joey", customer.first_name
   end
 
   def test_it_returns_a_collection_of_invoices
     repository = Minitest::Mock.new
     customer = Customer.new(data, repository)
-    repository.expect(:find_invoices_by_id, nil, ["1"])
+    repository.expect(:find_invoices_by_id, nil, [1])
     customer.invoices
     repository.verify
   end

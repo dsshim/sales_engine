@@ -23,7 +23,7 @@ def test_it_creates_the_invoices_by_taking_data_from_the_repo
 end
 
 def test_it_has_access_to_the_data
-  first_merchant = "26"
+  first_merchant = 26
   assert_equal first_merchant, invoice_repository.invoices.first.merchant_id
 end
 
@@ -39,15 +39,15 @@ def test_it_returns_a_random_invoice
 end
 
 def test_it_finds_invoices_by_id
-  assert_equal "1", invoice_repository.find_by_id("1").id
+  assert_equal 1, invoice_repository.find_by_id(1).id
 end
 
 def test_it_finds_invoices_by_customer_id
-  assert_equal "1", invoice_repository.find_by_customer_id("1").customer_id
+  assert_equal 1, invoice_repository.find_by_customer_id(1).customer_id
 end
 
 def test_it_finds_invoices_by_merchant_id
-  assert_equal "33", invoice_repository.find_by_merchant_id("33").merchant_id
+  assert_equal 33, invoice_repository.find_by_merchant_id(33).merchant_id
 end
 
 def test_it_finds_invoices_by_status
@@ -63,11 +63,11 @@ def test_it_finds_invoices_by_update_date
 end
 
 def test_it_finds_all_invoices_by_customer_id
-  assert_equal 8, invoice_repository.find_all_by_customer_id("1").count
+  assert_equal 8, invoice_repository.find_all_by_customer_id(1).count
 end
 
 def test_it_finds_all_invoices_by_merchant_id
-  assert_equal 1, invoice_repository.find_all_by_merchant_id("75").count
+  assert_equal 1, invoice_repository.find_all_by_merchant_id(75).count
 end
 
 def test_it_finds_all_invoices_by_status
