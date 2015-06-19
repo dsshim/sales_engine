@@ -23,8 +23,8 @@ class SalesEngine
               :item_rows,
               :transaction_rows
 
-  def initialize
-    startup
+  def initialize(filepath = nil)
+    @filepath = filepath
   end
 
   def startup
