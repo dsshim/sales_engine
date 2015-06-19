@@ -98,5 +98,14 @@ class SalesEngine
   def find_invoices_by_customer_id_from_customer(customer_id)
     invoice_repository.find_all_by_customer_id(customer_id)
   end
+
+  def find_transactions_by_invoice_id(invoice_id)
+    transaction_repository.find_all_by_invoice_id(invoice_id)
+  end
+
+  # def find_all_transactions_by_results(result)
+  #   results = transaction_repository.find_all_by_result(result)
+  #   invoice_items_repository.find_all_by_invoice_id(results[:invoice_id]) #is this correct?
+  # end
 end
 

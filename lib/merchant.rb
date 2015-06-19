@@ -1,4 +1,5 @@
 require_relative 'merchant_repository'
+require 'pry'
 
 class Merchant
 
@@ -22,7 +23,15 @@ class Merchant
   end
 
   def invoices
-    repository.find_invoices_by_merchant_id(id)
+   @invoices =  repository.find_invoices_by_merchant_id(id)
+  end
+
+  def invoices_by_merchant_id
+    invoices
+  end
+
+  def revenue
+    repository.find_transactions_by_invoice_id(@invoices[:merchant_id])
   end
 end
 

@@ -23,6 +23,9 @@ class Item
 
   def invoice_items
     repository.find_items_by_id(id)
+
+    #call all invoice items by id
+    #map through invoice items and find item
   end
 
   def merchants

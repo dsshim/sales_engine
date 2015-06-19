@@ -27,6 +27,25 @@ class MerchantRepository
     sales_engine.find_items_by_merchant_id(merchant_id)
   end
 
+  def find_transactions_by_invoice_id(invoice_id)
+  sales_engine.find_transactions_by_invoice_id(invoice_id)
+  end
+
+  # def most_revenue(quantity)
+  #   transaction = sales_engine.find_all_transactions_by_results("success")
+  #   calculate_revenue(quantity, transactions)
+  # end
+  #
+  # def calculate_revenue(quantity, invoice_items)
+  #   revenue = invoice_items.map do |item|
+  #     item[:unit_price] * item[:quantity]
+  #   end
+
+  #revenue = invoice_items[:unit_price] * invoice_items[:quantity]
+
+  #end
+
+
   def find_invoices_by_merchant_id(merchant_id)
     sales_engine.find_invoices_by_merchant_id(merchant_id)
   end
