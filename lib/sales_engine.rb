@@ -29,11 +29,35 @@ class SalesEngine
   end
 
   def startup
+    @customer_repository
+    @merchant_repository
+    @invoice_repository
+    @invoice_item_repository
+    @item_repository
+    @transaction_repository
+  end
+
+  def customer_repository
     @customer_repository ||= CustomerRepository.new(CSVParser.customer_rows, self)
+  end
+
+  def merchant_repository
     @merchant_repository ||= MerchantRepository.new(CSVParser.merchant_rows, self)
+  end
+
+  def invoice_repository
     @invoice_repository ||= InvoiceRepository.new(CSVParser.invoice_rows, self)
+  end
+
+  def invoice_items_repository
     @invoice_items_repository ||= InvoiceItemRepository.new(CSVParser.invoice_items_rows, self)
+  end
+
+  def item_repository
     @item_repository ||= ItemRepository.new(CSVParser.item_rows, self)
+  end
+
+  def transaction_repository
     @transaction_repository ||= TransactionRepository.new(CSVParser.transaction_rows, self)
   end
 

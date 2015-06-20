@@ -11,6 +11,10 @@ class ItemRepository
     @items = item_parser
   end
 
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
+
   def item_parser
     rows.map { |row| Item.new(row, self) }
   end

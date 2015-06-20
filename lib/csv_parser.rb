@@ -2,7 +2,7 @@ require 'csv'
 
 module CSVParser
 
-  def self.customer_rows #here we need to instantiate customer_repo class
+  def self.customer_rows
     CSV.read "./data/customers.csv", headers: true, header_converters: :symbol
   end
 

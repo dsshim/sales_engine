@@ -11,6 +11,10 @@ class MerchantRepository
     @merchants = merchant_parser
   end
 
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
+
   def merchant_parser
     rows.map { |row| Merchant.new(row, self) }
   end
