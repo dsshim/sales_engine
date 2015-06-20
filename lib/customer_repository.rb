@@ -7,9 +7,14 @@ class CustomerRepository
   attr_accessor :rows
 
   def initialize(rows, sales_engine)
+    require 'pry'; binding.pry
     @sales_engine = sales_engine
     @rows = rows
     @customers = customer_parser
+  end
+
+  def inspect
+    "#<#{self.class} #{@customers.size} rows>"
   end
 
   def customer_parser

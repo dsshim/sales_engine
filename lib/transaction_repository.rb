@@ -13,6 +13,10 @@ class TransactionRepository
     transaction_parser
   end
 
+  def inspect
+    "#<#{self.class} #{@transactions.size} rows>"
+  end
+
   def transaction_parser
     @transactions = rows.map { |row| Transaction.new(row, self) }
   end

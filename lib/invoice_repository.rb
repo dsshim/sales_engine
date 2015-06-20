@@ -13,6 +13,10 @@ class InvoiceRepository
     invoice_parser
   end
 
+  def inspect
+    "#<#{self.class} #{@invoices.size} rows>"
+  end
+
   def invoice_parser
     @invoices = rows.map{|row| Invoice.new(row,self)}
   end

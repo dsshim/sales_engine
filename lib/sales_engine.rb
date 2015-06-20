@@ -21,29 +21,44 @@ class SalesEngine
               :invoice_rows,
               :invoice_items_rows,
               :item_rows,
-              :transaction_rows
+              :transaction_rows,
+              :filepath
 
-  def initialize
-    startup
+  def initialize(filepath = nil)
+    @filepath = filepath
   end
 
   def startup
-    parse_data
-    @customer_repository = CustomerRepository.new(customer_rows, self)
-    @merchant_repository = MerchantRepository.new(merchant_rows, self)
-    @invoice_repository = InvoiceRepository.new(invoice_rows, self)
-    @invoice_items_repository = InvoiceItemRepository.new(invoice_items_rows, self)
-    @item_repository = ItemRepository.new(item_rows, self)
-    @transaction_repository = TransactionRepository.new(transaction_rows, self)
+    @customer_repository
+    @merchant_repository
+    @invoice_repository
+    @invoice_item_repository
+    @item_repository
+    @transaction_repository
   end
 
-  def parse_data
-    @customer_rows = CSVParser.customer_rows
-    @merchant_rows = CSVParser.merchant_rows
-    @invoice_rows = CSVParser.invoice_rows
-    @invoice_items_rows = CSVParser.invoice_items_rows
-    @item_rows = CSVParser.item_rows
-    @transaction_rows = CSVParser.transaction_rows
+  def customer_repository
+    @customer_repository ||= CustomerRepository.new(CSVParser.customer_rows, self)
+  end
+
+  def merchant_repository
+    @merchant_repository ||= MerchantRepository.new(CSVParser.merchant_rows, self)
+  end
+
+  def invoice_repository
+    @invoice_repository ||= InvoiceRepository.new(CSVParser.invoice_rows, self)
+  end
+
+  def invoice_items_repository
+    @invoice_items_repository ||= InvoiceItemRepository.new(CSVParser.invoice_items_rows, self)
+  end
+
+  def item_repository
+    @item_repository ||= ItemRepository.new(CSVParser.item_rows, self)
+  end
+
+  def transaction_repository
+    @transaction_repository ||= TransactionRepository.new(CSVParser.transaction_rows, self)
   end
 
   def find_items_by_merchant_id(merchant_id)

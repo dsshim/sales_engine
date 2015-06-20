@@ -33,12 +33,11 @@ class Merchant
   def revenue
     repository.find_transactions_by_invoice_id(@invoices[:merchant_id])
   end
+
+  def revenue
+
+  end
 end
 
 # items returns a collection of Item instances associated with that merchant for the products they sell
-
-
-
-
-
 # invoices returns a collection of Invoice instances associated with that merchant from their known orders
