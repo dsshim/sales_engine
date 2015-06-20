@@ -4,11 +4,12 @@ require './lib/customer_repository'
 
 class CustomerRepositoryTest < Minitest::Test
 
-  attr_reader :sales_engine, :customer_repository
+  attr_reader :engine, :customer_repository
 
   def setup
     rows = CSV.open "./data/fixtures/customers_test.csv", headers: true, header_converters: :symbol
-    @customer_repository = CustomerRepository.new(rows, sales_engine)
+    @engine = SalesEngine.new
+    # @customer_repository = CustomerRepository.new(rows, sales_engine)
   end
 
   def test_it_loads_on_initialize
@@ -30,9 +31,9 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_returns_a_random_customer
-    first_customer = customer_repository.random.first_name
-    second_customer = customer_repository.random.first_name
-
+    first_customer = engine.customer_repository.random
+    second_customer = engine.customer_repository.random
+    require 'pry'; binding.pry
     refute_equal first_customer, second_customer
   end
 

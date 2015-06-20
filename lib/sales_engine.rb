@@ -49,8 +49,8 @@ class SalesEngine
     @invoice_repository ||= InvoiceRepository.new(CSVParser.invoice_rows, self)
   end
 
-  def invoice_items_repository
-    @invoice_items_repository ||= InvoiceItemRepository.new(CSVParser.invoice_items_rows, self)
+  def invoice_item_repository
+    @invoice_item_repository ||= InvoiceItemRepository.new(CSVParser.invoice_items_rows, self)
   end
 
   def item_repository
@@ -73,13 +73,12 @@ class SalesEngine
     transaction_repository.find_all_by_invoice_id(invoice_id)
   end
 
-  def find_invoice_items_by_id(invoice_id)
-    invoice_items_repository.find_all_by_invoice_id(invoice_id)
+  def find_invoices_by_id(id)
+    invoice_item_repository.find_all_by_invoice_id(id)
   end
 
-  def find_items_by_invoice_id_thru_invoice_items(invoice_id)
-    invoice_items = invoice_items_repository.find_all_by_invoice_id(invoice_id)
-    item_repository.find_all_by_item_id(invoice_items[:item_id]) #is this correct?
+  def find_invoice_items_by_invoice_id(invoice_id)
+    invoice_item_repository.find_all_by_invoice_id(invoice_id)
   end
 
   def find_invoices_by_customer_id(id)
@@ -94,8 +93,24 @@ class SalesEngine
     invoice_repository.find_all_by_id(id)
   end
 
+  def find_invoice_items_by_id(invoice_id)
+    invoice_item_repository.find_all_by_invoice_id(invoice_id)
+  end
+
+  def find_items_by_invoice_item_id(item_id)
+    invoice_item_repository.find_all_by_item_id(item_id)
+  end
+
   def find_invoice_items_by_item_id(id)
     item_repository.find_all_by_id(id)
+  end
+
+  def find_items_by_item_id(item_id)
+    item_repository.find_all_by_id(item_id)
+  end
+
+  def find_item_by_item_id(item_id)
+    item_repository.find_by_id(item_id.join.to_i)
   end
 
   def find_items_by_id(item_id)

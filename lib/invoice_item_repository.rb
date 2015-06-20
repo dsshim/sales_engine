@@ -3,14 +3,13 @@ require_relative 'invoice_item'
 
 class InvoiceItemRepository
 
-  attr_reader :sales_engine, :invoice_items
-  attr_accessor :rows
+  attr_reader :engine
+  attr_accessor :rows, :invoice_items
 
-  def initialize(rows, sales_engine)
-    @sales_engine = sales_engine
+  def initialize(rows, engine)
+    @engine = engine
     @rows = rows
-    @invoice_items = []
-    invoice_item_parser
+    @invoice_items = invoice_item_parser
   end
 
   def inspect
@@ -30,11 +29,15 @@ class InvoiceItemRepository
   end
 
   def find_invoice_items_by_invoice_id(id)
-    sales_engine.find_invoice_items_by_invoice_id(id)
+    engine.find_invoice_items_by_invoice_id(id)
   end
 
   def find_invoice_items_by_item_id(id)
-    sales_engine.find_invoice_items_by_item_id(id)
+    engine.find_invoice_items_by_item_id(id)
+  end
+
+  def find_item_by_item_id(item_id)
+    engine.find_item_by_item_id(item_id)
   end
 
   def find_by_id(id)

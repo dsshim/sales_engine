@@ -3,13 +3,12 @@ require_relative 'customer'
 
 class CustomerRepository
 
-  attr_reader :sales_engine, :customers
-  attr_accessor :rows
+  attr_reader :engine
+  attr_accessor :rows, :customers
 
-  def initialize(rows, sales_engine)
-    require 'pry'; binding.pry
-    @sales_engine = sales_engine
+  def initialize(rows, engine)
     @rows = rows
+    @engine = engine
     @customers = customer_parser
   end
 
@@ -30,7 +29,7 @@ class CustomerRepository
   end
 
   def find_invoices_by_id(id)
-    sales_engine.find_invoices_by_customer_id_from_customer(id)
+    engine.find_invoices_by_customer_id_from_customer(id)
   end
 
   def find_by_id(id)
