@@ -25,9 +25,9 @@ class Item
     repository.find_items_by_id(id)
   end
 
-  def merchants
-    repository.find_merchants_by_id(id)
+  def merchant
+    merchant_id = repository.find_by_id(id).merchant_id
+    repository.find_merchants_by_id(merchant_id)[0]
   end
-
 end
 

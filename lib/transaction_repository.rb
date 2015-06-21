@@ -4,11 +4,11 @@ require_relative 'transaction'
 class TransactionRepository
 
 
-  attr_accessor :sales_engine, :rows, :transactions
+  attr_accessor :engine, :rows, :transactions
 
-  def initialize(rows, sales_engine)
+  def initialize(rows, engine)
     @rows = rows
-    @sales_engine = sales_engine
+    @engine = engine
     @transactions = []
     transaction_parser
   end
@@ -29,8 +29,12 @@ class TransactionRepository
     transactions.sample
   end
 
-  def find_invoices_by_id(id)
-    sales_engine.find_invoices_by_id(id)
+  def find_invoices_by_invoice_id(id)
+    engine.find_inv_by_invoice_id(id)
+  end
+
+  def find_customer_by_customer_id(customer_id)
+    engine.find_customer_by_customer_id(customer_id)
   end
 
   def find_by_id(id)
@@ -65,6 +69,10 @@ class TransactionRepository
 
   def find_by_date_updated(updated_at)
     transactions.detect { |transaction| transaction.updated_at == updated_at }
+  end
+
+  def find_all_by_id(id)
+    transactions.select { |transaction| transaction.id == id }
   end
 
   def find_all_by_invoice_id(invoice_id) #add test in trans_repo_test

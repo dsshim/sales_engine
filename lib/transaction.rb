@@ -9,14 +9,15 @@ class Transaction
     @repository = repo
     @id = row[:id].to_i
     @invoice_id = row[:invoice_id].to_i
-    @credit_card_number = row[:credit_card_number].to_i
+    @credit_card_number = row[:credit_card_number]
     @credit_card_expiration_date = row[:credit_card_expiration_date]
     @result = row[:result]
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
 
-  def invoices
-    repository.find_invoices_by_id(id)
+  def invoice
+    invoice_id = repository.find_by_id(id).invoice_id
+    repository.find_invoices_by_invoice_id(invoice_id)[0]
   end
 end

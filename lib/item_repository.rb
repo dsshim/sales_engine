@@ -1,13 +1,14 @@
 require_relative 'sales_engine'
 require_relative 'item'
+require 'bigdecimal'
 class ItemRepository
 
   attr_accessor :rows
-  attr_reader   :items
+  attr_reader   :items, :engine
 
-  def initialize(rows, sales_engine)
+  def initialize(rows, engine)
     @rows = rows
-    @sales_engine = sales_engine
+    @engine = engine
     @items = item_parser
   end
 
@@ -28,11 +29,11 @@ class ItemRepository
   end
 
   def find_items_by_id(id)
-    sales_engine.find_items_by_id(id)
+    engine.find_items_by_id(id)
   end
 
   def find_merchants_by_id(id)
-    sales_engine.find_merchants_by_id(id)
+    engine.find_merchants_by_id(id)
   end
 
   def find_by_id(id)
@@ -52,7 +53,9 @@ class ItemRepository
   end
 
   def find_by_unit_price(unit_price)
-    items.detect { |item| item.unit_price == unit_price }
+    items.detect do |item|
+      item.unit_price.to_f / 100 == unit_price.to_f
+    end
   end
 
   def find_by_merchant_id(merchant_id)

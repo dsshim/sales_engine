@@ -69,6 +69,10 @@ class SalesEngine
     invoice_repository.find_all_by_merchant_id(merchant_id)
   end
 
+  def find_inv_by_invoice_id(id)
+    invoice_repository.find_all_by_id(id)
+  end
+
   def find_invoices_by_invoice_id(invoice_id)
     transaction_repository.find_all_by_invoice_id(invoice_id)
   end
@@ -122,7 +126,7 @@ class SalesEngine
   end
 
   def find_items_by_id(item_id)
-    invoice_items_repository.find_all_by_item_id(item_id)
+    invoice_item_repository.find_all_by_item_id(item_id)
   end
 
   def find_merchants_by_id(id)
@@ -140,10 +144,5 @@ class SalesEngine
   def find_transactions_by_invoice_id(invoice_id)
     transaction_repository.find_all_by_invoice_id(invoice_id)
   end
-
-  # def find_all_transactions_by_results(result)
-  #   results = transaction_repository.find_all_by_result(result)
-  #   invoice_items_repository.find_all_by_invoice_id(results[:invoice_id]) #is this correct?
-  # end
 end
 
