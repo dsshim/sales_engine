@@ -17,7 +17,10 @@ class Transaction
   end
 
   def invoice
-    invoice_id = repository.find_by_id(id).invoice_id
-    repository.find_invoices_by_invoice_id(invoice_id)[0]
+    repository.find_invoices_by_invoice_id(get_invoice_id)[0]
+  end
+
+  def get_invoice_id
+    repository.find_by_id(id).invoice_id
   end
 end
