@@ -28,8 +28,11 @@ class InvoiceItem
   end
 
   def item
-    item_id = invoice_items_by_item_id.map(&:item_id).uniq
-    repository.find_item_by_item_id(item_id)
+    repository.find_item_by_item_id(get_item_id)
+  end
+
+  def get_item_id
+    invoice_items_by_item_id.map(&:item_id).uniq
   end
 
   def invoice_items_by_item_id
