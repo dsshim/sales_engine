@@ -28,8 +28,8 @@ class InvoiceItemRepository
     invoice_items.sample
   end
 
-  def find_invoice_items_by_invoice_id(id)
-    engine.find_invoice_items_by_invoice_id(id)
+  def find_invoice_items_by_invoice_id_from_ii(id)
+    engine.find_invoice_items_by_invoice_id_from_ii(id)
   end
 
   def find_invoice_items_by_item_id(id)

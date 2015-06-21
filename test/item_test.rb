@@ -35,7 +35,7 @@ class ItemTest < Minitest::Test
     repository = Minitest::Mock.new
     item = Item.new(data, repository)
     repository.expect(:find_merchants_by_id, nil, [1])
-    item.merchants
+    item.merchant
     repository.verify
   end
 end

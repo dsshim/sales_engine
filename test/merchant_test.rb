@@ -52,14 +52,14 @@ class MerchantTest < Minitest::Test
     repository.verify
   end
 
-  def test_it_returns_total_revenue
-    repository = Minitest::Mock.new
-    merchant = Merchant.new(data, repository)
-    #repository.expect(:find_invoices_by_merchant_id, 2, [1])
-    repository.expect(:find_transactions_by_invoice_id, 2, [1])
-    merchant.revenue
-    repository.verify
-  end
+  # def test_it_returns_total_revenue
+  #   repository = Minitest::Mock.new
+  #   merchant = Merchant.new(data, repository)
+  #   #repository.expect(:find_invoices_by_merchant_id, 2, [1])
+  #   repository.expect(:find_transactions_by_invoice_id, 2, [1])
+  #   merchant.revenue
+  #   repository.verify
+  # end
 
 end
 
