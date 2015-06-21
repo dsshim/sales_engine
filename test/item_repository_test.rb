@@ -53,7 +53,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_items_by_unit_price
-    assert_equal 75107, item_repository.find_by_unit_price(75107).unit_price
+    assert_equal 75107, item_repository.find_by_unit_price(751.07).unit_price
   end
 
   def test_it_finds_items_by_merchant_id

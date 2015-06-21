@@ -26,8 +26,11 @@ class Item
   end
 
   def merchant
-    merchant_id = repository.find_by_id(id).merchant_id
-    repository.find_merchants_by_id(merchant_id)[0]
+    repository.find_merchants_by_id(get_merchant_id)[0]
+  end
+
+  def get_merchant_id
+    repository.find_by_id(id).merchant_id
   end
 end
 
