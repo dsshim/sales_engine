@@ -39,6 +39,10 @@ class ItemRepository
     items.detect { |item| item.id == id }
   end
 
+  def find_each_by_id(ids)
+    ids.map { |id| find_by_id(id) }
+  end
+
   def find_by_name(name)
     items.detect { |item| item.name == name }
   end

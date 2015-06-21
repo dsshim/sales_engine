@@ -25,23 +25,33 @@ class Invoice
   end
 
   def invoice_items
-    repository.find_items_by_invoice_id_thru_invoice_items(id)
+    repository.find_items_by_invoice_item(id)
   end
 
- def items
+  def items
+    find_items_by_invoice_item_id
+  end
+
+  def find_invoices_by_id
+    repository.find_invoices_by_id(id)
+  end
+
+  def find_invoice_items_by_invoice_id #returns invoice items by invoice id
     invoice_id = find_invoices_by_id.map(&:id).join.to_i
     repository.find_invoice_items_by_id(invoice_id)
   end
 
-  def find_invoices_by_id
-    repository.find_invoices_by_id(id) # invoice id 1002
+  def find_items_by_invoice_item_id
+    item_ids = find_invoice_items_by_invoice_id.map(&:item_id)
+    repository.find_items_by_item_id(item_ids)
   end
 
-  def customers
-    repository.find_invoices_by_customer_id(id)
+  def customer
+    customer_id = repository.find_all_by_id(id).map(&:customer_id).join.to_i
+    repository.find_customer_by_customer_id(customer_id)
   end
 
-  def merchants
+  def merchant
     repository.find_merchant_invoices_by_id(id)
   end
 end

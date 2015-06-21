@@ -85,6 +85,10 @@ class SalesEngine
     customer_repository.find_all_by_customer_id(id)
   end
 
+  def find_customer_by_customer_id(customer_id)
+    customer_repository.find_by_id(customer_id)
+  end
+
   def find_merchant_invoices_by_id(id)
     merchant_repository.find_all_by_id(id)
   end
@@ -107,6 +111,10 @@ class SalesEngine
 
   def find_items_by_item_id(item_id)
     item_repository.find_all_by_id(item_id)
+  end
+
+  def find_all_by_item_id(item_ids)
+    item_repository.find_each_by_id(item_ids)
   end
 
   def find_item_by_item_id(item_id)
