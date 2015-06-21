@@ -36,10 +36,3 @@ class InvoiceItem
     repository.find_all_by_item_id(item_id)
   end
 end
-
-#item --> collection of items related to the incoive_item id
-# get all invoice items related to inv it id
-# use the item id in that object to query for items
-
-
-
