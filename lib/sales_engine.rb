@@ -5,6 +5,7 @@ require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
 require_relative 'item_repository'
 require_relative 'transaction_repository'
+require 'pry'
 
 class SalesEngine
 
@@ -143,6 +144,10 @@ class SalesEngine
 
   def find_transactions_by_invoice_id(invoice_id)
     transaction_repository.find_all_by_invoice_id(invoice_id)
+  end
+
+  def find_multiple_transactions_by_invoice_id(ids)
+    transaction_repository.find_multiple_transactions_by_invoice_id(ids)
   end
 end
 

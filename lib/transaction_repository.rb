@@ -75,8 +75,14 @@ class TransactionRepository
     transactions.select { |transaction| transaction.id == id }
   end
 
-  def find_all_by_invoice_id(invoice_id) #add test in trans_repo_test
+  def find_all_by_invoice_id(invoice_id)
     transactions.select { |transaction| transaction.invoice_id == invoice_id }
+  end
+
+  def find_multiple_transactions_by_invoice_id(ids)
+    ids.map do |id|
+      find_all_by_invoice_id(id)
+    end
   end
 
   def find_all_by_credit_card_number(credit_card)
