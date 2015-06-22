@@ -1,5 +1,6 @@
 require_relative 'sales_engine'
 require_relative 'merchant'
+require 'pry'
 
 class MerchantRepository
 
@@ -31,12 +32,24 @@ class MerchantRepository
     sales_engine.find_items_by_merchant_id(merchant_id)
   end
 
-  def find_transactions_by_invoice_id(invoice_id)
-  sales_engine.find_transactions_by_invoice_id(invoice_id)
+  def find_transactions_by_invoice_id(invoice_ids)
+    sales_engine.find_transactions_by_invoice_id(invoice_ids)
+  end
+
+  def find_multiple_transactions_by_invoice_id(ids)
+    sales_engine.find_multiple_transactions_by_invoice_id(ids)
+  end
+
+  def find_invoice_items_by_invoice_id(invoice_ids)
+    sales_engine.find_invoice_items_by_id(invoice_ids)
   end
 
   def find_invoices_by_merchant_id(merchant_id)
     sales_engine.find_invoices_by_merchant_id(merchant_id)
+  end
+
+  def find_items_by_item_id(item_id)
+    sales_engine.find_items_by_item_id(item_id)
   end
 
   def find_by_id(id)
