@@ -32,17 +32,16 @@ class Customer
   end
 
   def favorite_merchant
+
+    repository.find_merchant_by_id(get_merchant_id)[0]
+  end
+
+  def get_merchant_id
     invoice_id = successful_transactions.map(&:invoice_id)
     invoices = repository.find_invoices_by_invoice_id(invoice_id)
     groups = invoices.group_by {|invoice| invoice.merchant_id }
-    most_frequent_m_id = groups.max_by {|x| groups.count(x) }.first
-    repository.find_merchant_by_id(most_frequent_m_id)[0]
-    # return all invoices of succesful transactions
-    # then, group by merchant id and find the most frequent
-    # take that merchant id and look up the merchant
+    groups.max_by {|x| groups.count(x) }.first
   end
-
-  #favorite_merchant returns an instance of Merchant where the customer has conducted the most successful transactions
 
   def find_customer_id
     repository.find_by_id(id).id
