@@ -30,7 +30,7 @@ class TransactionRepository
   end
 
   def find_invoices_by_invoice_id(id)
-    engine.find_inv_by_invoice_id(id)
+    engine.find_invoices_by_id(id)
   end
 
   def find_customer_by_customer_id(customer_id)

@@ -4,11 +4,11 @@ require_relative 'invoice'
 class InvoiceRepository
 
 
-  attr_accessor :sales_engine, :rows, :invoices
+  attr_accessor :engine, :rows, :invoices
 
-  def initialize(rows, sales_engine)
+  def initialize(rows, engine)
     @rows = rows
-    @sales_engine = sales_engine
+    @engine = engine
     @invoices = []
     invoice_parser
   end
@@ -30,39 +30,39 @@ class InvoiceRepository
   end
 
   def find_invoices_by_invoice_id(id)
-    sales_engine.find_invoices_by_invoice_id(id)
+    engine.find_invoices_by_invoice_id(id)
   end
 
   def find_invoices_by_id(id)
-    sales_engine.find_invoices_by_id(id)
+    engine.find_invoices_by_id(id)
   end
 
   def find_items_by_invoice_item(id)
-    sales_engine.find_invoice_items_by_id(id)
+    engine.find_invoice_items_by_id(id)
   end
 
   def find_items_by_item_id(item_ids)
-    sales_engine.find_all_by_item_id(item_ids)
+    engine.find_all_by_item_id(item_ids)
   end
 
   def find_customer_by_customer_id(customer_id)
-    sales_engine.find_customer_by_customer_id(customer_id)
+    engine.find_customer_by_id(customer_id)
   end
 
   def find_invoices_by_customer_id(id)
-    sales_engine.find_invoices_by_customer_id(id)
+    engine.find_invoices_by_customer_id(id)
   end
 
   def find_invoice_items_by_id(id)
-    sales_engine.find_invoice_items_by_id(id)
+    engine.find_invoice_items_by_id(id)
   end
 
   def find_all_items_by_item_id(item_id)
-    sales_engine.find_items_by_item_id(item_id)
+    engine.find_items_by_item_id(item_id)
   end
 
-  def find_merchant_invoices_by_id(id)
-    sales_engine.find_merchant_invoices_by_id(id)
+  def find_merchant_invoices_by_id(id) #change chain
+    engine.find_merchants_by_id(id)
   end
 
   def find_by_id(id)
