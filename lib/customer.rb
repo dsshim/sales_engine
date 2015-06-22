@@ -21,4 +21,38 @@ class Customer
   def invoices
     repository.find_invoices_by_id(id)
   end
+
+  def transactions
+    invoice_ids = find_invoices_by_invoice_id.map(&:id)
+    repository.find_transactions_by_invoice_ids(invoice_ids).flatten
+  end
+
+  def successful_transactions
+    transactions.select { |transaction| transaction.result == 'success' }
+  end
+
+  def favorite_merchant
+
+    repository.find_merchant_by_id(get_merchant_id)[0]
+  end
+
+  def get_merchant_id
+    invoice_id = successful_transactions.map(&:invoice_id)
+    invoices = repository.find_invoices_by_invoice_id(invoice_id)
+    groups = invoices.group_by {|invoice| invoice.merchant_id }
+    groups.max_by {|x| groups.count(x) }.first
+  end
+
+  def find_customer_id
+    repository.find_by_id(id).id
+  end
+
+  def find_invoices_by_customer_id
+    id = find_customer_id
+    repository.find_invoices_by_customer_id(id)
+  end
+
+  def find_invoices_by_invoice_id
+    repository.find_invoices_by_customer_id(id)
+  end
 end

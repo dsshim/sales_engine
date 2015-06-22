@@ -80,9 +80,7 @@ class TransactionRepository
   end
 
   def find_multiple_transactions_by_invoice_id(ids)
-    ids.map do |id|
-      find_all_by_invoice_id(id)
-    end
+    ids.map { |id| find_all_by_invoice_id(id) }
   end
 
   def find_all_by_credit_card_number(credit_card)
