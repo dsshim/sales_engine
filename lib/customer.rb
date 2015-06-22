@@ -23,12 +23,26 @@ class Customer
   end
 
   def transactions
-    find_transactions_by_invoice_id
-    #returns an array of transactions connected to that customer
-      # find customer by id in the repo √
-      # find all invoices associated with that customer id √
-      # find all transactions associated with that invoice  id
+    invoice_ids = find_invoices_by_invoice_id.map(&:id)
+    repository.find_transactions_by_invoice_ids(invoice_ids).flatten
   end
+
+  def successful_transactions
+    transactions.select { |transaction| transaction.result == 'success' }
+  end
+
+  def favorite_merchant
+    invoice_id = successful_transactions.map(&:invoice_id)
+    invoices = repository.find_invoices_by_invoice_id(invoice_id)
+    groups = invoices.group_by {|invoice| invoice.merchant_id }
+    most_frequent_m_id = groups.max_by {|x| groups.count(x) }.first
+    repository.find_merchant_by_id(most_frequent_m_id)[0]
+    # return all invoices of succesful transactions
+    # then, group by merchant id and find the most frequent
+    # take that merchant id and look up the merchant
+  end
+
+  #favorite_merchant returns an instance of Merchant where the customer has conducted the most successful transactions
 
   def find_customer_id
     repository.find_by_id(id).id
@@ -39,7 +53,7 @@ class Customer
     repository.find_invoices_by_customer_id(id)
   end
 
-  def find_transactions_by_invoice_id
-    invoice_id = repository.find_invoices_by_customer_id(id)
+  def find_invoices_by_invoice_id
+    repository.find_invoices_by_customer_id(id)
   end
 end

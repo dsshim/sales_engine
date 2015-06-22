@@ -93,6 +93,10 @@ class InvoiceRepository
     invoices.select { |invoice| invoice.id == id }
   end
 
+  def find_multiple_by_id(id)
+    id.map {|id| find_by_id(id) }
+  end
+
   def find_all_by_customer_id(customer_id)
     invoices.select { |invoice| invoice.customer_id == customer_id }
   end
