@@ -29,6 +29,10 @@ class ItemRepository
     items.sample
   end
 
+  def get_invoice_items
+    engine.get_invoice_items
+  end
+
   def find_items_by_id(id)
     engine.find_items_by_id(id)
   end
@@ -41,7 +45,7 @@ class ItemRepository
     items.detect { |item| item.id == id }
   end
 
-  def find_each_by_id(ids)
+  def find_multiple_by_id(ids)
     ids.map { |id| find_by_id(id) }
   end
 

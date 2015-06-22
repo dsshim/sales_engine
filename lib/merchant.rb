@@ -1,3 +1,4 @@
+
 require_relative 'merchant_repository'
 require 'bigdecimal'
 
@@ -51,7 +52,6 @@ class Merchant
     invoice_items_quantity = invoice_items.flatten.map do |invoice_item|
       invoice_item.quantity
     end
-
     pairs = invoice_items_price.zip(invoice_items_quantity)
     sum = pairs.map { |element| element.reduce(:*) }.reduce(:+)
     bd_sum = sum.to_f / 100
