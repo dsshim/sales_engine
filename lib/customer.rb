@@ -21,4 +21,25 @@ class Customer
   def invoices
     repository.find_invoices_by_id(id)
   end
+
+  def transactions
+    find_transactions_by_invoice_id
+    #returns an array of transactions connected to that customer
+      # find customer by id in the repo √
+      # find all invoices associated with that customer id √
+      # find all transactions associated with that invoice  id
+  end
+
+  def find_customer_id
+    repository.find_by_id(id).id
+  end
+
+  def find_invoices_by_customer_id
+    id = find_customer_id
+    repository.find_invoices_by_customer_id(id)
+  end
+
+  def find_transactions_by_invoice_id
+    invoice_id = repository.find_invoices_by_customer_id(id)
+  end
 end

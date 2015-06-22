@@ -32,6 +32,10 @@ class CustomerRepository
     engine.find_invoices_by_customer_id_from_customer(id)
   end
 
+  def find_invoices_by_customer_id(id)
+    engine.find_invoices_by_customer_id_from_customer(id)
+  end
+
   def find_by_id(id)
     customers.detect { |customer| customer.id == id }
   end

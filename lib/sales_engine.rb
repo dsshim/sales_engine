@@ -150,4 +150,3 @@ class SalesEngine
     transaction_repository.find_multiple_transactions_by_invoice_id(ids)
   end
 end
-
