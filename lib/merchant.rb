@@ -1,6 +1,5 @@
 require_relative 'merchant_repository'
 require 'bigdecimal'
-require 'pry'
 
 class Merchant
 
@@ -27,24 +26,14 @@ class Merchant
     repository.find_invoices_by_merchant_id(id)
   end
 
-
   def revenue
     calculate_revenue
   end
-
-
-  def get_transactions_by_invoice_id
-    invoice_ids = invoices.map(&:id)
-    repository.find_multiple_transactions_by_invoice_id(invoice_ids)
-  end
-
 
   def get_invoice_id_from_filtered_transactions
     invoice_ids = filter_transactions.map { |transaction| transaction.map(&:invoice_id) }.flatten
     invoice_ids.map { |invoice_id| repository.find_invoice_items_by_invoice_id(invoice_id) }
   end
-
-
 
   def filter_transactions
     invoices.map do |invoice|
