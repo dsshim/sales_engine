@@ -28,6 +28,18 @@ class InvoiceItemRepository
     invoice_items.sample
   end
 
+  def create_invoice_items(invoice, items)
+    data = {
+      id:          "#{invoice_items.last.id + 1}",
+      invoice_id:  invoice[:id],
+      quantity:    invoice[:merchant].id,
+      unit_price:  invoice[:status],
+      created_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}",
+    }
+
+  end
+
   def find_invoice_items_by_invoice_id_from_ii(id)
     engine.find_invoices_by_id(id) #change chain down
   end
@@ -98,6 +110,10 @@ class InvoiceItemRepository
 
   def find_all_by_date_updated(updated_at)
     invoice_items.select { |invoice_item| invoice_item.updated_at == updated_at }
+  end
+
+  def find_invoice_by_id(invoice_id)
+    engine.find_invoice_by_id(invoice_id)
   end
 end
 

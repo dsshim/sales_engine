@@ -18,7 +18,20 @@ class InvoiceRepository
   end
 
   def invoice_parser
-    @invoices = rows.map{|row| Invoice.new(row,self)}
+    @invoices = rows.map{|row| Invoice.new(row, self)}
+  end
+
+  def create(data)
+    row = {
+      id:          "#{invoices.last.id + 1}",
+      customer_id: data[:customer].id,
+      merchant_id: data[:merchant].id,
+      status:      data[:status],
+      created_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}",
+    }
+    invoices << new_invoice = Invoice.new(row, self)
+    engine.create_invoice_items(new_invoice, data[:items])
   end
 
   def all
