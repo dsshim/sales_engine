@@ -16,8 +16,8 @@ class Transaction
     @updated_at = row[:updated_at]
   end
 
-  def invoice
-    repository.find_invoices_by_invoice_id(get_invoice_id)[0]
+  def invoice(invoice_id = get_invoice_id)
+    repository.find_invoices_by_invoice_id(invoice_id)[0]
   end
 
   def get_invoice_id

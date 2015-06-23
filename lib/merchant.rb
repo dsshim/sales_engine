@@ -29,14 +29,14 @@ class Merchant
   end
 
   def revenue(date = nil)
-    filtered = filter_transactions(date)
+    filtered = filter_transactions(date, 'success')
     invoice_ids = get_invoice_id_from_filtered_transactions(filtered)
     invoice_items = get_invoice_items_from_invoice_ids(invoice_ids)
     calculate_revenue(invoice_items)
   end
 
   def favorite_customer
-    transactions = filter_transactions
+    transactions = filter_transactions('success')
     invoice_ids = get_invoice_id_from_filtered_transactions(transactions)
     invoices = repository.find_invoices_by_ids(invoice_ids)
     groups = invoices.group_by {|invoice| invoice.customer_id }
@@ -44,11 +44,19 @@ class Merchant
     sorted.first[1].first.customer
   end
 
-  def filter_transactions(date = nil)
+  def customers_with_pending_invoices
+    pending = invoices.select do |invoice|
+      successful = invoice.transactions.any? {|transaction| transaction.result == 'success' }
+      invoice if !successful
+    end
+    pending.map {|invoice| invoice.customer }
+  end
+
+  def filter_transactions(date = nil, result)
     date ? invoices = filter_invoices(date) : invoices = repository.find_invoices_by_merchant_id(id)
     invoices.map do |invoice|
       invoice.transactions.select do |transaction|
-        transaction.result == 'success'
+        transaction.result == result
       end
     end
   end
