@@ -1,4 +1,5 @@
 require_relative 'item_repository'
+require 'pry'
 class Item
 
   attr_reader :id,
@@ -31,6 +32,26 @@ class Item
 
   def get_merchant_id
     repository.find_by_id(id).merchant_id
+  end
+
+  def best_day
+    get_invoice_ids_from_invoice_items
+  end
+
+
+  def get_invoice_ids_from_invoice_items
+    invoice_id = invoice_items.map(&:invoice_id)
+    invoices = invoice_id.map{|id| repository.find_invoices_by_invoice_id(id)}
+    dates = invoices.flatten.map(&:created_at)
+    quantity = invoice_items.map(&:quantity)
+    price = invoice_items.map(&:unit_price)
+    quan_price_array = price.zip(quantity)
+    revenue = quan_price_array.map do |price,quantity|
+      price*quantity
+    end
+    revenue_by_date = revenue.zip(dates).sort
+    max_revenue = revenue_by_date.pop
+    Date.parse(max_revenue[1])
   end
 end
 

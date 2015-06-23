@@ -40,6 +40,10 @@ class InvoiceItemRepository
     engine.find_item_by_item_id(item_id)
   end
 
+  def find_transactions_by_invoice_id(invoice_id)
+    engine.find_transactions_from_inv_item_by_invoice_ids(invoice_id)
+  end
+
   def find_by_id(id)
     invoice_items.detect { |invoice_item| invoice_item.id == id }
   end

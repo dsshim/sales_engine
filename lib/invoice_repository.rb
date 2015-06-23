@@ -113,6 +113,10 @@ class InvoiceRepository
     invoices.select { |invoice| invoice.created_at == created_at }
   end
 
+  def find_all_by_date_created_string_input(created_at)
+    invoices.select { |invoice| invoice.created_at.to_s.include?(created_at) }
+  end
+
   def find_all_by_date_updated(updated_at)
     invoices.select { |invoice| invoice.updated_at == updated_at }
   end

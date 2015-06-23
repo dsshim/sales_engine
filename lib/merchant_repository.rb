@@ -36,6 +36,10 @@ class MerchantRepository
     sales_engine.find_transactions_by_invoice_id(invoice_ids)
   end
 
+  def find_transactions_by_inv_id_for_merchant(invoice_id)
+    sales_engine.find_transactions_by_inv_id_for_merchant(invoice_id)
+  end
+
   def find_multiple_transactions_by_invoice_id(ids)
     sales_engine.find_multiple_transactions_by_invoice_id(ids)
   end
@@ -82,5 +86,26 @@ class MerchantRepository
 
   def find_all_by_date_updated(updated_at)
     merchants.select { |merchant| merchant.updated_at == updated_at }
+  end
+
+
+  def revenue(date)
+  format_date = date.strftime("%Y-%m-%d")
+  invoices = sales_engine.find_invoices_by_date_created(format_date)
+  invoice_ids = invoices.map(&:id)
+  transactions = invoice_ids.map{|id| find_transactions_by_inv_id_for_merchant(id)}
+  successful_transactions = transactions.flatten.select{|transaction| transaction.result == 'success'}
+  successful_ids = successful_transactions.map(&:invoice_id)
+  invoice_items = successful_ids.map{|id| find_invoice_items_by_invoice_id(id)}
+  prices = invoice_items.flatten.map(&:unit_price)
+  quantity = invoice_items.flatten.map(&:quantity)
+    price_quan_array = prices.zip(quantity)
+
+    revenue_array = price_quan_array.map do |quantity, price|
+      quantity*price
+    end
+    revenue = revenue_array.reduce(:+)
+    decimal_revenue = revenue.to_f/100
+  BigDecimal.new("#{decimal_revenue}")
   end
 end
