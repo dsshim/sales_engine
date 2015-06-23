@@ -39,17 +39,17 @@ class Merchant
     transactions = filter_transactions('success')
     invoice_ids = get_invoice_id_from_filtered_transactions(transactions)
     invoices = repository.find_invoices_by_ids(invoice_ids)
-    groups = invoices.group_by {|invoice| invoice.customer_id }
+    groups = invoices.group_by(&:customer_id)
     sorted = groups.sort_by { |group| -group[1].count }
     sorted.first[1].first.customer
   end
 
   def customers_with_pending_invoices
     pending = invoices.select do |invoice|
-      successful = invoice.transactions.any? {|transaction| transaction.result == 'success' }
+      successful = invoice.transactions.any? { |transaction| transaction.result == 'success' }
       invoice if !successful
     end
-    pending.map {|invoice| invoice.customer }
+    pending.map(&:customer)
   end
 
   def filter_transactions(date = nil, result)
