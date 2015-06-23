@@ -1,5 +1,4 @@
 require_relative 'item_repository'
-require 'pry'
 class Item
 
   attr_reader :id,
@@ -24,6 +23,14 @@ class Item
 
   def invoice_items
     repository.find_items_by_id(id)
+  end
+
+  def revenue
+    invoice_items.map{|ii| ii.value}.inject(0){|acc, value| acc + value}
+  end
+
+  def quantity_sold
+    invoice_items.map{|ii| ii.quantity_sold }.inject(0){|acc, value| acc + value}
   end
 
   def merchant

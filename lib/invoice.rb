@@ -1,5 +1,4 @@
 require_relative 'invoice_repository'
-require 'pry'
 class Invoice
 
   attr_accessor :created_at,
@@ -62,5 +61,9 @@ class Invoice
 
   def merchant
     repository.find_merchant_invoices_by_id(id)
+  end
+
+  def successful?
+    transactions.any?{|t| t.successful? }
   end
 end

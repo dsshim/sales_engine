@@ -24,13 +24,12 @@ class InvoiceItem
   end
 
   def invoice
-    repository.find_invoice_items_by_invoice_id_from_ii(id)
+    repository.find_invoice_by_id(invoice_id)
   end
 
   def item
     repository.find_item_by_item_id(get_item_id)
   end
-
 
   def get_item_id
     invoice_items_by_item_id.map(&:item_id).uniq
@@ -38,5 +37,21 @@ class InvoiceItem
 
   def invoice_items_by_item_id
     repository.find_all_by_item_id(item_id)
+  end
+
+  def value
+    if invoice.successful?
+      unit_price * quantity
+    else
+      0
+    end
+  end
+
+  def quantity_sold
+    if invoice.successful?
+      quantity
+    else
+      0
+    end
   end
 end

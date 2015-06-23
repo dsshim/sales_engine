@@ -1,7 +1,7 @@
 require_relative 'sales_engine'
 require_relative 'item'
 require 'bigdecimal'
-require'pry'
+
 class ItemRepository
 
   attr_accessor :rows, :items, :engine
@@ -19,6 +19,14 @@ class ItemRepository
 
   def item_parser
     rows.map { |row| Item.new(row, self) }
+  end
+
+  def most_revenue(quantity)
+    items.max_by(quantity){|i| i.revenue}
+  end
+
+  def most_items(quantity)
+    items.max_by(quantity){|i| i.quantity_sold}
   end
 
   def all

@@ -1,6 +1,5 @@
 require_relative 'sales_engine'
 require_relative 'merchant'
-require 'pry'
 
 class MerchantRepository
 
@@ -37,7 +36,7 @@ class MerchantRepository
   end
 
   def find_transactions_by_inv_id_for_merchant(invoice_id)
-    sales_engine.find_transactions_by_inv_id_for_merchant(invoice_id)
+    engine.find_transactions_by_inv_id_for_merchant(invoice_id)
   end
 
   def find_multiple_transactions_by_invoice_id(ids)
@@ -95,7 +94,7 @@ class MerchantRepository
 
   def revenue(date)
   format_date = date.strftime("%Y-%m-%d")
-  invoices = sales_engine.find_invoices_by_date_created(format_date)
+  invoices = engine.find_invoices_by_date_created(format_date)
   invoice_ids = invoices.map(&:id)
   transactions = invoice_ids.map{|id| find_transactions_by_inv_id_for_merchant(id)}
   successful_transactions = transactions.flatten.select{|transaction| transaction.result == 'success'}

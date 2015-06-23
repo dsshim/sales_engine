@@ -23,4 +23,12 @@ class Transaction
   def get_invoice_id
     repository.find_by_id(id).invoice_id
   end
+
+  def successful_result_codes
+    ['success']
+  end
+
+  def successful?
+    successful_result_codes.include?(result)
+  end
 end

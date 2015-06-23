@@ -26,7 +26,7 @@ class InvoiceItemTest < Minitest::Test
   def test_it_returns_a_collection_of_invoices
     repository = Minitest::Mock.new
     invoice_item = InvoiceItem.new(data, repository)
-    repository.expect(:find_invoice_items_by_invoice_id_from_ii, nil, [1])
+    repository.expect(:find_invoice_by_id, nil, [1])
     invoice_item.invoice
     repository.verify
   end
