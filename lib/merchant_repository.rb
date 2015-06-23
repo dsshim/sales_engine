@@ -4,11 +4,11 @@ require 'pry'
 
 class MerchantRepository
 
-  attr_reader :rows, :merchants, :sales_engine
+  attr_reader :rows, :merchants, :engine
 
-  def initialize(rows, sales_engine)
+  def initialize(rows, engine)
     @rows = rows
-    @sales_engine = sales_engine
+    @engine = engine
     @merchants = merchant_parser
   end
 
@@ -29,27 +29,31 @@ class MerchantRepository
   end
 
   def find_items_by_merchant_id(merchant_id)
-    sales_engine.find_items_by_merchant_id(merchant_id)
+    engine.find_items_by_merchant_id(merchant_id)
   end
 
   def find_transactions_by_invoice_id(invoice_ids)
-    sales_engine.find_transactions_by_invoice_id(invoice_ids)
+    engine.find_transactions_by_invoice_id(invoice_ids)
   end
 
   def find_multiple_transactions_by_invoice_id(ids)
-    sales_engine.find_multiple_transactions_by_invoice_id(ids)
+    engine.find_multiple_transactions_by_invoice_id(ids)
   end
 
   def find_invoice_items_by_invoice_id(invoice_ids)
-    sales_engine.find_invoice_items_by_id(invoice_ids)
+    engine.find_invoice_items_by_id(invoice_ids)
   end
 
   def find_invoices_by_merchant_id(merchant_id)
-    sales_engine.find_invoices_by_merchant_id(merchant_id)
+    engine.find_invoices_by_merchant_id(merchant_id)
   end
 
   def find_items_by_item_id(item_id)
-    sales_engine.find_items_by_item_id(item_id)
+    engine.find_items_by_item_id(item_id)
+  end
+
+  def find_invoices_by_ids(invoice_ids)
+    engine.find_invoices_by_inv_id(invoice_ids)
   end
 
   def find_by_id(id)

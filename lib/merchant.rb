@@ -30,11 +30,21 @@ class Merchant
 
   def revenue(date = nil)
     filtered = filter_transactions(date)
-    invoice_items = get_invoice_id_from_filtered_transactions(filtered)
+    invoice_ids = get_invoice_id_from_filtered_transactions(filtered)
+    invoice_items = get_invoice_items_from_invoice_ids(invoice_ids)
     calculate_revenue(invoice_items)
   end
 
-  def filter_transactions(date)
+  def favorite_customer
+    transactions = filter_transactions
+    invoice_ids = get_invoice_id_from_filtered_transactions(transactions)
+    invoices = repository.find_invoices_by_ids(invoice_ids)
+    groups = invoices.group_by {|invoice| invoice.customer_id }
+    sorted = groups.sort_by { |group| -group[1].count }
+    sorted.first[1].first.customer
+  end
+
+  def filter_transactions(date = nil)
     date ? invoices = filter_invoices(date) : invoices = repository.find_invoices_by_merchant_id(id)
     invoices.map do |invoice|
       invoice.transactions.select do |transaction|
@@ -48,7 +58,10 @@ class Merchant
   end
 
   def get_invoice_id_from_filtered_transactions(filtered)
-    invoice_ids = filtered.map { |transaction| transaction.map(&:invoice_id) }.flatten
+    filtered.map { |transaction| transaction.map(&:invoice_id) }.flatten
+  end
+
+  def get_invoice_items_from_invoice_ids(invoice_ids)
     invoice_ids.map { |invoice_id| repository.find_invoice_items_by_invoice_id(invoice_id) }
   end
 
