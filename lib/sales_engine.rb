@@ -90,6 +90,10 @@ class SalesEngine
     invoice_repository.find_all_by_customer_id(customer_id)
   end
 
+  def find_invoices_by_date_created(created_at)
+    invoice_repository.find_all_by_date_created_string_input(created_at)
+  end
+
   def find_invoice_items_by_id(invoice_id)
     invoice_item_repository.find_all_by_invoice_id(invoice_id)
   end
@@ -128,5 +132,9 @@ class SalesEngine
 
   def find_transactions_by_invoice_ids(ids)
     transaction_repository.find_multiple_transactions_by_invoice_id(ids)
+  end
+
+  def find_transactions_by_inv_id_for_merchant(invoice_id)
+    transaction_repository.find_all_by_invoice_id(invoice_id)
   end
 end

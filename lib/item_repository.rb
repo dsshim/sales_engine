@@ -33,12 +33,20 @@ class ItemRepository
     engine.get_invoice_items
   end
 
+  def find_invoices_by_invoice_id(invoice_id)
+    engine.find_invoices_by_id(invoice_id)
+  end
+
   def find_items_by_id(id)
     engine.find_items_by_id(id)
   end
 
   def find_merchants_by_id(id)
     engine.find_merchants_by_id(id)
+  end
+
+  def find_transactions_by_id(id)
+    engine.find_invoices_by_invoice_id(id)
   end
 
   def find_by_id(id)
