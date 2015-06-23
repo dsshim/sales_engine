@@ -32,7 +32,6 @@ class Customer
   end
 
   def favorite_merchant
-
     repository.find_merchant_by_id(get_merchant_id)[0]
   end
 

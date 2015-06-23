@@ -52,8 +52,8 @@ class Invoice
     find_invoice_items_by_invoice_id.map(&:item_id)
   end
 
-  def customer
-    repository.find_customer_by_customer_id(get_customer_id)
+  def customer(customer_id = get_customer_id)
+    repository.find_customer_by_customer_id(customer_id)
   end
 
   def get_customer_id
