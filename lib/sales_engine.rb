@@ -125,7 +125,7 @@ class SalesEngine
     item_repository.find_multiple_by_id(item_ids)
   end
 
-  def find_item_by_item_id(item_id)
+  def find_item_by_id(item_id)
     item_repository.find_by_id(item_id)
   end
 

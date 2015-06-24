@@ -45,11 +45,11 @@ class ItemRepository
     engine.find_invoices_by_id(invoice_id)
   end
 
-  def find_items_by_id(id)
+  def find_items_by_id(id) ##
     engine.find_items_by_id(id)
   end
 
-  def find_merchants_by_id(id)
+  def find_merchants_by_id(id) ##
     engine.find_merchants_by_id(id)
   end
 

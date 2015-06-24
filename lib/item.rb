@@ -36,29 +36,18 @@ class Item
     @quantity_sold ||= invoice_items.map { |ii| ii.quantity_sold }.inject(0) { |acc, value| acc + value }
   end
 
-  def merchant ## CHANGE
+  def merchant
     repository.find_merchants_by_id(get_merchant_id)[0]
   end
 
-  def get_merchant_id ## CHANGE
+  def get_merchant_id
     repository.find_by_id(id).merchant_id
   end
 
   def best_day
-    get_best_day
-  end
-
-  def get_best_day
-    # returns the date with most sales for a given item (using invoice date)
-
-    invoice_id = invoice_items.map(&:invoice_id)
-    invoices = invoice_id.map { |id| repository.find_invoices_by_invoice_id(id) }
-    dates = invoices.flatten.map(&:created_at)
-    quantity = invoice_items.map(&:quantity)
-    price = invoice_items.map(&:unit_price)
-    quan_price_array = price.zip(quantity)
-    revenue = quan_price_array.map do |price, quantity|
-      price * quantity
+    dates = invoice_items.map { |ii| ii.invoice.created_at }
+    revenue = invoice_items.map do |ii|
+      ii.quantity * ii.unit_price
     end
     revenue_by_date = revenue.zip(dates).sort
     max_revenue = revenue_by_date.pop

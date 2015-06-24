@@ -55,32 +55,16 @@ class InvoiceRepository
     engine.find_invoices_by_invoice_id(id)
   end
 
-  def find_invoices_by_id(id)
-    engine.find_invoices_by_id(id)
-  end
-
   def find_items_by_invoice_item(id)
     engine.find_invoice_items_by_id(id)
   end
 
-  def find_items_by_item_id(item_ids)
-    engine.find_all_by_item_id(item_ids)
+  def find_customer_by_customer_id(id)
+    engine.find_customer_by_id(id)
   end
 
-  def find_customer_by_customer_id(customer_id)
-    engine.find_customer_by_id(customer_id)
-  end
-
-  def find_invoices_by_customer_id(id)
-    engine.find_invoices_by_customer_id(id)
-  end
-
-  def find_invoice_items_by_id(id)
-    engine.find_invoice_items_by_id(id)
-  end
-
-  def find_all_items_by_item_id(item_id)
-    engine.find_items_by_item_id(item_id)
+  def find_all_items_by_item_id(id)
+    engine.find_items_by_item_id(id)
   end
 
   def find_merchant_invoices_by_id(id)
