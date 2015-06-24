@@ -48,11 +48,6 @@ class Customer
     repository.find_by_id(id).id
   end
 
-  def find_invoices_by_customer_id
-    id = find_customer_id
-    repository.find_invoices_by_customer_id(id)
-  end
-
   def find_invoices_by_invoice_id
     repository.find_invoices_by_customer_id(id)
   end
