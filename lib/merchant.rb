@@ -13,7 +13,6 @@ class Merchant
                 :invoices,
                 :invoice_items
 
-
   def initialize(row, repo)
     @repository = repo
     @id = row[:id].to_i
@@ -34,9 +33,8 @@ class Merchant
     @invoice_items ||= repository.find_all_invoice_items
   end
 
-
   def revenue(date = nil)
-   filtered = filter_transactions(date)
+    filtered = filter_transactions(date)
     ii = filtered.flatten.map(&:invoice).map(&:invoice_items)
     calculate_revenue_from_invoice_items(ii)
   end
@@ -76,4 +74,3 @@ class Merchant
     invoices.select { |invoice| Date.parse(invoice.created_at) == date }
   end
 end
-

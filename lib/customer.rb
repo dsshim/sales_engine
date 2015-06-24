@@ -30,7 +30,7 @@ class Customer
   end
 
   def successful_transactions
-    @successful_transactions ||= transactions.select { |transaction| transaction.result == 'success' }
+    @successful_transactions ||= transactions.select { |transaction| transaction.successful? }
   end
 
   def favorite_merchant
@@ -48,12 +48,7 @@ class Customer
     repository.find_by_id(id).id
   end
 
-  def find_invoices_by_customer_id
-    id = find_customer_id
-    repository.find_invoices_by_customer_id(id)
-  end
-
   def find_invoices_by_invoice_id
-    repository.find_invoices_by_customer_id(id)
+    repository.find_invoices_by_id(id)
   end
 end

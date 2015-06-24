@@ -45,18 +45,9 @@ class Item
   end
 
   def best_day
-    get_best_day
-  end
-
-  def get_best_day
-    invoice_id = invoice_items.map(&:invoice_id)
-    invoices = invoice_id.map { |id| repository.find_invoices_by_invoice_id(id) }
-    dates = invoices.flatten.map(&:created_at)
-    quantity = invoice_items.map(&:quantity)
-    price = invoice_items.map(&:unit_price)
-    quan_price_array = price.zip(quantity)
-    revenue = quan_price_array.map do |price, quantity|
-      price * quantity
+    dates = invoice_items.map { |ii| ii.invoice.created_at }
+    revenue = invoice_items.map do |ii|
+      ii.quantity * ii.unit_price
     end
     revenue_by_date = revenue.zip(dates).sort
     max_revenue = revenue_by_date.pop

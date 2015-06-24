@@ -4,7 +4,8 @@ require_relative 'invoice_item'
 class InvoiceItemRepository
 
   attr_reader :engine
-  attr_accessor :rows, :invoice_items
+  attr_accessor :rows,
+                :invoice_items
 
   def initialize(rows, engine)
     @engine = engine
@@ -42,20 +43,12 @@ class InvoiceItemRepository
     invoice_items << InvoiceItem.new(data, self)
   end
 
-  def find_invoice_items_by_invoice_id_from_ii(id)
-    engine.find_invoices_by_id(id) #change chain down
+  def find_item_by_id(item_id)
+    engine.find_item_by_id(item_id)
   end
 
-  def find_invoice_items_by_item_id(id)
-    engine.find_items_by_item_id(id)
-  end
-
-  def find_item_by_item_id(item_id)
-    engine.find_item_by_item_id(item_id)
-  end
-
-  def find_transactions_by_invoice_id(invoice_id)
-    engine.find_transactions_from_inv_item_by_invoice_ids(invoice_id)
+  def find_invoice_by_id(invoice_id)
+    engine.find_invoice_by_id(invoice_id)
   end
 
   def find_by_id(id)
@@ -113,10 +106,4 @@ class InvoiceItemRepository
   def find_all_by_date_updated(updated_at)
     invoice_items.select { |invoice_item| invoice_item.updated_at == updated_at }
   end
-
-  def find_invoice_by_id(invoice_id)
-    engine.find_invoice_by_id(invoice_id)
-  end
 end
-
-

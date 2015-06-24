@@ -5,7 +5,6 @@ require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
 require_relative 'item_repository'
 require_relative 'transaction_repository'
-require 'pry'
 
 class SalesEngine
 
@@ -62,7 +61,7 @@ class SalesEngine
     @transaction_repository ||= TransactionRepository.new(CSVParser.transaction_rows, self)
   end
 
-  def find_merchants_by_id(id) # item_repo line 40
+  def find_merchants_by_id(id)
     merchant_repository.find_all_by_id(id)
   end
 
@@ -94,10 +93,6 @@ class SalesEngine
     invoice_repository.find_all_by_customer_id(customer_id)
   end
 
-  def find_invoices_by_date_created(created_at)
-    invoice_repository.find_all_by_date_created_string_input(created_at)
-  end
-
   def find_all_invoice_items
     invoice_item_repository.all
   end
@@ -118,15 +113,11 @@ class SalesEngine
     invoice_item_repository.create_invoice_items(id, invoice_id, quantity, unit_price)
   end
 
-  def find_items_by_item_id(item_id)
-    item_repository.find_all_by_id(item_id)
-  end
-
   def find_all_by_item_id(item_ids)
     item_repository.find_multiple_by_id(item_ids)
   end
 
-  def find_item_by_item_id(item_id)
+  def find_item_by_id(item_id)
     item_repository.find_by_id(item_id)
   end
 
@@ -144,10 +135,6 @@ class SalesEngine
 
   def find_transactions_by_invoice_ids(ids)
     transaction_repository.find_multiple_transactions_by_invoice_id(ids)
-  end
-
-  def find_transactions_by_inv_id_for_merchant(invoice_id)
-    transaction_repository.find_all_by_invoice_id(invoice_id)
   end
 
   def create_transaction(data, id)
