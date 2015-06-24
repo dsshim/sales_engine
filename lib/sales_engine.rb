@@ -114,8 +114,8 @@ class SalesEngine
     invoice_item_repository.find_all_by_item_id(item_id)
   end
 
-  def create_invoice_items(new_invoice, items)
-    invoice_item_repository.create_invoice_items(new_invoice, items)
+  def create_invoice_items(id, invoice_id, quantity, unit_price)
+    invoice_item_repository.create_invoice_items(id, invoice_id, quantity, unit_price)
   end
 
   def find_items_by_item_id(item_id)
@@ -127,7 +127,7 @@ class SalesEngine
   end
 
   def find_item_by_item_id(item_id)
-    item_repository.find_by_id(item_id.join.to_i)
+    item_repository.find_by_id(item_id)
   end
 
   def find_items_by_merchant_id(merchant_id)
@@ -148,5 +148,9 @@ class SalesEngine
 
   def find_transactions_by_inv_id_for_merchant(invoice_id)
     transaction_repository.find_all_by_invoice_id(invoice_id)
+  end
+
+  def create_transaction(data, id)
+    transaction_repository.create_transaction(data, id)
   end
 end

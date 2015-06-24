@@ -23,7 +23,7 @@ class InvoiceRepository
 
   def create(data)
     row = {
-      id:          "#{invoices.last.id + 1}",
+      id:          invoices.last.id + 1,
       customer_id: data[:customer].id,
       merchant_id: data[:merchant].id,
       status:      data[:status],
@@ -31,7 +31,17 @@ class InvoiceRepository
       updated_at:  "#{Date.new}",
     }
     invoices << new_invoice = Invoice.new(row, self)
-    engine.create_invoice_items(new_invoice, data[:items])
+    invoice_items = data[:items].map do |item|
+      quantity = 1
+      unit_price = item.unit_price
+      id = item.id
+      engine.create_invoice_items(id, row[:id].to_i, quantity, unit_price)
+    end
+    new_invoice
+  end
+
+  def create_transaction(data, id)
+    engine.create_transaction(data, id)
   end
 
   def all

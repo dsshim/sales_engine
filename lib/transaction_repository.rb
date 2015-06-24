@@ -59,6 +59,19 @@ class TransactionRepository
     end
   end
 
+  def create_transaction(data, id)
+    data = {
+      id:                           transactions.last.id + 1,
+      invoice_id:                   id,
+      credit_card_number:           data[:credit_card_number],
+      credit_card_expiration_date:  data[:credit_card_expiration_date],
+      result:                       data[:result],
+      created_at:                   Date.new,
+      updated_at:                   Date.new
+    }
+    transactions << Transaction.new(data, self)
+  end
+
   def find_by_result(result)
     transactions.detect { |transaction| transaction.result == result }
   end
