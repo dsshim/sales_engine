@@ -5,7 +5,7 @@ require 'bigdecimal'
 class ItemRepository
 
   attr_accessor :rows, :items, :engine
-  #attr_reader   :items, :engine
+  attr_reader   :most_revenue, :most_items
 
   def initialize(rows, engine)
     @rows = rows
@@ -22,11 +22,11 @@ class ItemRepository
   end
 
   def most_revenue(quantity)
-    items.max_by(quantity){|i| i.revenue}
+    @most_revenue ||= items.max_by(quantity){|i| i.revenue}
   end
 
   def most_items(quantity)
-    items.max_by(quantity){|i| i.quantity_sold}
+    @most_items ||= items.max_by(quantity){|i| i.quantity_sold}
   end
 
   def all

@@ -31,11 +31,11 @@ class InvoiceItemTest < Minitest::Test
     repository.verify
   end
 
-  # def test_it_returns_a_collection_of_items #rewrite with dummy data
-  #   repository = Minitest::Mock.new
-  #   invoice_item = InvoiceItem.new(data, repository)
-  #   repository.expect(:find_invoice_items_by_item_id, nil, [1])
-  #   invoice_item.item
-  #   repository.verify
-  # end
+  def test_it_returns_a_collection_of_items #rewrite with dummy data
+    repository = Minitest::Mock.new
+    invoice_item = InvoiceItem.new(data, repository)
+    repository.expect(:find_invoice_items_by_item_id, nil, [1])
+    invoice_item.item
+    repository.verify
+  end
 end

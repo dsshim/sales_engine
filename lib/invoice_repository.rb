@@ -9,8 +9,7 @@ class InvoiceRepository
   def initialize(rows, engine)
     @rows = rows
     @engine = engine
-    @invoices = []
-    invoice_parser
+    @invoices = invoice_parser
   end
 
   def inspect
@@ -84,7 +83,7 @@ class InvoiceRepository
     engine.find_items_by_item_id(item_id)
   end
 
-  def find_merchant_invoices_by_id(id) #change chain
+  def find_merchant_invoices_by_id(id)
     engine.find_merchants_by_id(id)
   end
 
@@ -143,5 +142,4 @@ class InvoiceRepository
   def find_all_by_date_updated(updated_at)
     invoices.select { |invoice| invoice.updated_at == updated_at }
   end
-
 end

@@ -8,7 +8,10 @@ class Item
               :merchant_id,
               :created_at,
               :updated_at,
-              :repository
+              :repository,
+              :invoice_items,
+              :revenue,
+              :quantity_sold
 
   def initialize(row, repo)
     @repository = repo
@@ -22,15 +25,15 @@ class Item
   end
 
   def invoice_items
-    repository.find_items_by_id(id)
+    @invoice_items ||= repository.find_items_by_id(id)
   end
 
   def revenue
-    invoice_items.map { |ii| ii.value }.inject(0) { |acc, value| acc + value }
+    @revenue ||= invoice_items.map { |ii| ii.value }.inject(0) { |acc, value| acc + value }
   end
 
   def quantity_sold
-    invoice_items.map { |ii| ii.quantity_sold }.inject(0) { |acc, value| acc + value }
+    @quantity_sold ||= invoice_items.map { |ii| ii.quantity_sold }.inject(0) { |acc, value| acc + value }
   end
 
   def merchant
