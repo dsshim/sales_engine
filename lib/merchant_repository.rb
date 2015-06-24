@@ -97,23 +97,7 @@ class MerchantRepository
 
 
   def revenue(date)
-    format_date = date.strftime("%Y-%m-%d")
-    invoices = engine.find_invoices_by_date_created(format_date)
-    invoice_ids = invoices.map(&:id)
-    transactions = invoice_ids.map { |id| find_transactions_by_inv_id_for_merchant(id) }
-    successful_transactions = transactions.flatten.select { |transaction| transaction.result == 'success' }
-    successful_ids = successful_transactions.map(&:invoice_id)
-    invoice_items = successful_ids.map { |id| find_invoice_items_by_invoice_id(id) }
-    prices = invoice_items.flatten.map(&:unit_price)
-    quantity = invoice_items.flatten.map(&:quantity)
-    price_quan_array = prices.zip(quantity)
-
-    revenue_array = price_quan_array.map do |quantity, price|
-      quantity*price
-    end
-    revenue = revenue_array.reduce(:+)
-    decimal_revenue = revenue.to_f/100
-    BigDecimal.new("#{decimal_revenue}")
+    merchants.map { |merchant| merchant.revenue(date)}.reduce(:+)
   end
 
 
@@ -127,7 +111,6 @@ class MerchantRepository
         item.quantity_sold
       end.reduce(:+)
     end
-
     merchant_ids = merchants.map(&:id)
     pairs = merchant_ids.zip(merchant_quantity)
     top_pairs = pairs.sort_by(&:last).reverse.take(quantity)
