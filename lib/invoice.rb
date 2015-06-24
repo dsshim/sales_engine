@@ -31,6 +31,10 @@ class Invoice
     invoice_items.map { |invoice_item| invoice_item.item }
   end
 
+  def charge(data)
+    repository.create_transaction(data, id)
+  end
+
   def get_invoice_id
     find_invoices_by_id.map(&:id).join.to_i
   end

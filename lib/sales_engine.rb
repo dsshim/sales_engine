@@ -145,4 +145,8 @@ class SalesEngine
   def find_transactions_by_inv_id_for_merchant(invoice_id)
     transaction_repository.find_all_by_invoice_id(invoice_id)
   end
+
+  def create_transaction(data, id)
+    transaction_repository.create_transaction(data, id)
+  end
 end
