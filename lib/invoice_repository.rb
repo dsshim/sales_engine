@@ -83,7 +83,7 @@ class InvoiceRepository
     engine.find_items_by_item_id(item_id)
   end
 
-  def find_merchant_invoices_by_id(id) #change chain
+  def find_merchant_invoices_by_id(id)
     engine.find_merchants_by_id(id)
   end
 

@@ -13,7 +13,8 @@ class InvoiceItem
               :invoice_id,
               :invoice,
               :item,
-              :quantity_sold
+              :quantity_sold,
+              :value
 
   def initialize(row, repo)
     @repository = repo
@@ -48,7 +49,7 @@ class InvoiceItem
   end
 
   def value
-    if invoice.successful?
+    @value ||= if invoice.successful?
       unit_price * quantity
     else
       0
