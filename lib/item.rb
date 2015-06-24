@@ -26,11 +26,11 @@ class Item
   end
 
   def revenue
-    invoice_items.map{|ii| ii.value}.inject(0){|acc, value| acc + value}
+    invoice_items.map { |ii| ii.value }.inject(0) { |acc, value| acc + value }
   end
 
   def quantity_sold
-    invoice_items.map{|ii| ii.quantity_sold }.inject(0){|acc, value| acc + value}
+    invoice_items.map { |ii| ii.quantity_sold }.inject(0) { |acc, value| acc + value }
   end
 
   def merchant
@@ -42,19 +42,18 @@ class Item
   end
 
   def best_day
-    get_invoice_ids_from_invoice_items
+    get_best_day
   end
 
-
-  def get_invoice_ids_from_invoice_items
+  def get_best_day
     invoice_id = invoice_items.map(&:invoice_id)
-    invoices = invoice_id.map{|id| repository.find_invoices_by_invoice_id(id)}
+    invoices = invoice_id.map { |id| repository.find_invoices_by_invoice_id(id) }
     dates = invoices.flatten.map(&:created_at)
     quantity = invoice_items.map(&:quantity)
     price = invoice_items.map(&:unit_price)
     quan_price_array = price.zip(quantity)
-    revenue = quan_price_array.map do |price,quantity|
-      price*quantity
+    revenue = quan_price_array.map do |price, quantity|
+      price * quantity
     end
     revenue_by_date = revenue.zip(dates).sort
     max_revenue = revenue_by_date.pop

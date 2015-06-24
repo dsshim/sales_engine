@@ -1,5 +1,6 @@
 require_relative 'merchant_repository'
 require 'bigdecimal'
+require 'pry'
 
 class Merchant
 
@@ -8,13 +9,15 @@ class Merchant
               :created_at,
               :updated_at,
               :repository
+
   attr_accessor :items,
-                :invoices
+                :invoices,
+                :invoice_items
 
 
   def initialize(row, repo)
     @repository = repo
-    @id = row[:id].to_i
+    @id = row[:id].to_i #:id,
     @name = row[:name]
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
@@ -27,6 +30,11 @@ class Merchant
   def invoices
     @invoices ||= repository.find_invoices_by_merchant_id(id)
   end
+
+  def invoice_items
+    @invoice_items ||= repository.find_all_invoice_items
+  end
+
 
   def revenue(date = nil)
     filtered = filter_transactions(date, 'success')
@@ -62,7 +70,7 @@ class Merchant
   end
 
   def filter_invoices(date)
-    invoices.select {|invoice| Date.parse(invoice.created_at) == date }
+    invoices.select { |invoice| Date.parse(invoice.created_at) == date }
   end
 
   def get_invoice_id_from_filtered_transactions(filtered)
@@ -74,14 +82,16 @@ class Merchant
   end
 
   def calculate_revenue(invoice_items)
-    invoice_items_price = invoice_items.flatten.map {|invoice_item|
-                                                      invoice_item.unit_price }
-    invoice_items_quantity = invoice_items.flatten.map {|invoice_item|
-                                                      invoice_item.quantity }
+    invoice_items_price = invoice_items.flatten.map { |invoice_item|
+      invoice_item.unit_price }
+    invoice_items_quantity = invoice_items.flatten.map { |invoice_item|
+      invoice_item.quantity }
     pairs = invoice_items_price.zip(invoice_items_quantity)
     sum = pairs.map { |element| element.reduce(:*) }.reduce(:+)
     bd_sum = sum.to_f / 100
     BigDecimal.new("#{bd_sum}")
   end
+
+
 end
 

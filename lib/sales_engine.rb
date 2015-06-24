@@ -98,6 +98,10 @@ class SalesEngine
     invoice_repository.find_all_by_date_created_string_input(created_at)
   end
 
+  def find_all_invoice_items
+    invoice_item_repository.all
+  end
+
   def find_invoice_items_by_id(invoice_id)
     invoice_item_repository.find_all_by_invoice_id(invoice_id)
   end
