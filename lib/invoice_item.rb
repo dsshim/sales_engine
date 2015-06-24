@@ -28,15 +28,20 @@ class InvoiceItem
   end
 
   def item
-    repository.find_item_by_item_id(get_item_id)
+    repository.find_item_by_item_id(item_id)
   end
 
-  def get_item_id
-    invoice_items_by_item_id.map(&:item_id).uniq
-  end
+  def create_invoice_items(invoice_id, quantity, unit_price)
+    data = {
+      id:          invoice_items.last.id + 1,
+      invoice_id:  invoice_id.to_i,
+      quantity:    quantity,
+      unit_price:  unit_price,
+      created_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}"
+    }
 
-  def invoice_items_by_item_id
-    repository.find_all_by_item_id(item_id)
+    invoice_items << InvoiceItem.new(data, self)
   end
 
   def value

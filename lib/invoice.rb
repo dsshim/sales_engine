@@ -28,15 +28,7 @@ class Invoice
   end
 
   def items
-    find_items_by_invoice_item_id
-  end
-
-  def find_invoices_by_id
-    repository.find_invoices_by_id(id)
-  end
-
-  def find_invoice_items_by_invoice_id
-    repository.find_invoice_items_by_id(get_invoice_id)
+    invoice_items.map { |invoice_item| invoice_item.item }
   end
 
   def get_invoice_id

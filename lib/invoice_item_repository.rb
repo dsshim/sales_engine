@@ -28,16 +28,18 @@ class InvoiceItemRepository
     invoice_items.sample
   end
 
-  def create_invoice_items(invoice, items)
+  def create_invoice_items(id, invoice_id, quantity, unit_price)
     data = {
-      id:          "#{invoice_items.last.id + 1}",
-      invoice_id:  invoice[:id],
-      quantity:    invoice[:merchant].id,
-      unit_price:  invoice[:status],
+      id:          invoice_items.last.item_id + 1,
+      item_id:     id,
+      invoice_id:  invoice_id.to_i,
+      quantity:    quantity,
+      unit_price:  unit_price,
       created_at:  "#{Date.new}",
-      updated_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}"
     }
 
+    invoice_items << InvoiceItem.new(data, self)
   end
 
   def find_invoice_items_by_invoice_id_from_ii(id)
