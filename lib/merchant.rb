@@ -33,7 +33,6 @@ class Merchant
     @invoice_items ||= repository.find_all_invoice_items
   end
 
-
   def revenue(date = nil)
     filtered = filter_transactions(date)
     ii = filtered.flatten.map(&:invoice).map(&:invoice_items)
@@ -75,4 +74,3 @@ class Merchant
     invoices.select { |invoice| Date.parse(invoice.created_at) == date }
   end
 end
-

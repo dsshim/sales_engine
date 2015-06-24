@@ -2,7 +2,6 @@ require_relative 'transaction_repository'
 
 class Transaction
 
-
   attr_reader :created_at,
               :credit_card_number,
               :updated_at,

@@ -3,7 +3,9 @@ require_relative 'merchant'
 
 class MerchantRepository
 
-  attr_reader :rows, :merchants, :engine
+  attr_reader :rows,
+              :merchants,
+              :engine
 
   def initialize(rows, engine)
     @rows = rows
@@ -95,11 +97,9 @@ class MerchantRepository
     merchants.select { |merchant| merchant.updated_at == updated_at }
   end
 
-
   def revenue(date)
     merchants.map { |merchant| merchant.revenue(date)}.reduce(:+)
   end
-
 
   def most_revenue(quantity)
     merchants.max_by(quantity) { |i| i.revenue }

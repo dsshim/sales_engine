@@ -3,8 +3,9 @@ require_relative 'invoice'
 
 class InvoiceRepository
 
-
-  attr_accessor :engine, :rows, :invoices
+  attr_accessor :engine,
+                :rows,
+                :invoices
 
   def initialize(rows, engine)
     @rows = rows

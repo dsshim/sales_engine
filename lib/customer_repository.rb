@@ -3,8 +3,9 @@ require_relative 'customer'
 
 class CustomerRepository
 
-  attr_reader :engine
-  attr_accessor :rows, :customers
+  attr_reader   :engine
+  attr_accessor :rows,
+                :customers
 
   def initialize(rows, engine)
     @rows = rows

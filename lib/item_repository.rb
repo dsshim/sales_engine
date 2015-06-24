@@ -1,11 +1,13 @@
 require_relative 'sales_engine'
 require_relative 'item'
-require 'bigdecimal'
 
 class ItemRepository
 
-  attr_accessor :rows, :items, :engine
-  attr_reader   :most_revenue, :most_items
+  attr_accessor :rows,
+                :items,
+                :engine,
+                :most_items,
+                :most_revenue
 
   def initialize(rows, engine)
     @rows = rows
@@ -45,11 +47,11 @@ class ItemRepository
     engine.find_invoices_by_id(invoice_id)
   end
 
-  def find_items_by_id(id) ##
+  def find_items_by_id(id)
     engine.find_items_by_id(id)
   end
 
-  def find_merchants_by_id(id) ##
+  def find_merchants_by_id(id)
     engine.find_merchants_by_id(id)
   end
 
@@ -74,9 +76,7 @@ class ItemRepository
   end
 
   def find_by_unit_price(unit_price)
-    items.detect do |item|
-      item.unit_price.to_f / 100 == unit_price.to_f
-    end
+    items.detect { |item| item.unit_price.to_f / 100 == unit_price.to_f }
   end
 
   def find_by_merchant_id(merchant_id)
@@ -118,5 +118,4 @@ class ItemRepository
   def find_all_by_date_updated(updated_at)
     items.select { |item| item.updated_at == updated_at }
   end
-
 end

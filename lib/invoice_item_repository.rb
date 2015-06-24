@@ -4,7 +4,8 @@ require_relative 'invoice_item'
 class InvoiceItemRepository
 
   attr_reader :engine
-  attr_accessor :rows, :invoice_items
+  attr_accessor :rows,
+                :invoice_items
 
   def initialize(rows, engine)
     @engine = engine

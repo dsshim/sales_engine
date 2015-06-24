@@ -3,7 +3,9 @@ require_relative 'transaction'
 
 class TransactionRepository
 
-  attr_accessor :engine, :rows, :transactions
+  attr_accessor :engine,
+                :rows,
+                :transactions
 
   def initialize(rows, engine)
     @rows = rows
@@ -103,13 +105,7 @@ class TransactionRepository
   end
 
   def find_all_by_expiration_date(expiration_date)
-    transactions.select do |transaction|
-      if transaction.credit_card_expiration_date.nil?
-        return "No Exp Date"
-      else
-        transaction.credit_card_expiration_date == expiration_date
-      end
-    end
+    transactions.select {|transaction| transaction.credit_card_expiration_date == expiration_date }
   end
 
   def find_all_by_date_created(created_at)
