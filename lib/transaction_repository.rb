@@ -3,14 +3,12 @@ require_relative 'transaction'
 
 class TransactionRepository
 
-
   attr_accessor :engine, :rows, :transactions
 
   def initialize(rows, engine)
     @rows = rows
     @engine = engine
-    @transactions = []
-    transaction_parser
+    @transactions = transaction_parser
   end
 
   def inspect
@@ -121,5 +119,4 @@ class TransactionRepository
   def find_all_by_date_updated(updated_at)
     transactions.select { |transaction| transaction.updated_at == updated_at }
   end
-
 end

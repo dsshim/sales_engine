@@ -11,6 +11,7 @@ class Invoice
                 :transactions,
                 :invoice_items,
                 :items,
+                :transactions,
                 :successful_transactions
 
   def initialize(row, repo)
@@ -23,7 +24,7 @@ class Invoice
     @updated_at = row[:updated_at]
   end
 
-  def transactions ##### FAILS WITH MEMOIZATION
+  def transactions # Memo-i-zation
     repository.find_invoices_by_invoice_id(id)
   end
 
@@ -47,7 +48,7 @@ class Invoice
     find_invoices_by_id.map(&:id).join.to_i
   end
 
-  def find_items_by_invoice_item_id
+  def find_items_by_invoice_item_id #CHANGE
     repository.find_items_by_item_id(get_item_ids)
   end
 
@@ -55,7 +56,9 @@ class Invoice
     find_invoice_items_by_invoice_id.map(&:item_id)
   end
 
-  def customer(customer_id = get_customer_id)
+  def customer(customer_id = get_customer_id) #CHANGE
+
+
     repository.find_customer_by_customer_id(customer_id)
   end
 

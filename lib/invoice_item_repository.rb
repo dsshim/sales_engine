@@ -118,5 +118,3 @@ class InvoiceItemRepository
     engine.find_invoice_by_id(invoice_id)
   end
 end
-
-
