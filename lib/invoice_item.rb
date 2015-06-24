@@ -10,7 +10,10 @@ class InvoiceItem
               :quantity,
               :item_id,
               :repository,
-              :invoice_id
+              :invoice_id,
+              :invoice,
+              :item,
+              :quantity_sold
 
   def initialize(row, repo)
     @repository = repo
@@ -24,11 +27,11 @@ class InvoiceItem
   end
 
   def invoice
-    repository.find_invoice_by_id(invoice_id)
+    @invoice ||= repository.find_invoice_by_id(invoice_id)
   end
 
   def item
-    repository.find_item_by_item_id(item_id)
+    @item ||= repository.find_item_by_item_id(item_id)
   end
 
   def create_invoice_items(invoice_id, quantity, unit_price)
@@ -53,7 +56,7 @@ class InvoiceItem
   end
 
   def quantity_sold
-    if invoice.successful?
+    @quanity_sold||= if invoice.successful?
       quantity
     else
       0

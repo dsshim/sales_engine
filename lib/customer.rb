@@ -6,7 +6,10 @@ class Customer
               :last_name,
               :created_at,
               :updated_at,
-              :repository
+              :repository,
+              :invoice,
+              :transactions,
+              :successful_transactions
 
   def initialize(row, repo)
     @repository = repo
@@ -18,16 +21,16 @@ class Customer
   end
 
   def invoices
-    repository.find_invoices_by_id(id)
+    @invoices ||= repository.find_invoices_by_id(id)
   end
 
   def transactions
     invoice_ids = find_invoices_by_invoice_id.map(&:id)
-    repository.find_transactions_by_invoice_ids(invoice_ids).flatten
+    @transactions ||= repository.find_transactions_by_invoice_ids(invoice_ids).flatten
   end
 
   def successful_transactions
-    transactions.select { |transaction| transaction.result == 'success' }
+    @successful_transactions ||= transactions.select { |transaction| transaction.result == 'success' }
   end
 
   def favorite_merchant

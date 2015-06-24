@@ -3,7 +3,15 @@ require_relative 'transaction_repository'
 class Transaction
 
 
-  attr_reader :created_at, :credit_card_number, :updated_at, :result, :id, :invoice_id, :credit_card_expiration_date, :repository
+  attr_reader :created_at,
+              :credit_card_number,
+              :updated_at,
+              :result,
+              :id,
+              :invoice_id,
+              :credit_card_expiration_date,
+              :repository,
+              :invoice
 
   def initialize(row, repo)
     @repository = repo
@@ -17,7 +25,7 @@ class Transaction
   end
 
   def invoice(invoice_id = get_invoice_id)
-    repository.find_invoices_by_invoice_id(invoice_id)[0]
+    @invoice ||= repository.find_invoices_by_invoice_id(invoice_id)[0]
   end
 
   def get_invoice_id

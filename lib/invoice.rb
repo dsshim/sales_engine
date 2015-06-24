@@ -7,7 +7,11 @@ class Invoice
                 :customer_id,
                 :id,
                 :status,
-                :repository
+                :repository,
+                :transactions,
+                :invoice_items,
+                :items,
+                :successful_transactions
 
   def initialize(row, repo)
     @repository = repo
@@ -19,16 +23,20 @@ class Invoice
     @updated_at = row[:updated_at]
   end
 
-  def transactions
+  def transactions ##### FAILS WITH MEMOIZATION
     repository.find_invoices_by_invoice_id(id)
   end
 
   def invoice_items
-    repository.find_items_by_invoice_item(id)
+    @invoice_items ||= repository.find_items_by_invoice_item(id)
   end
 
   def items
-    invoice_items.map { |invoice_item| invoice_item.item }
+    @items ||= invoice_items.map { |invoice_item| invoice_item.item }
+  end
+
+  def successful?
+    @successful_transactions ||= transactions.any?{|t| t.successful? }
   end
 
   def charge(data)
@@ -57,9 +65,5 @@ class Invoice
 
   def merchant
     repository.find_merchant_invoices_by_id(id)
-  end
-
-  def successful?
-    transactions.any?{|t| t.successful? }
   end
 end
