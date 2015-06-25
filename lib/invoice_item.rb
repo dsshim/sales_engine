@@ -53,6 +53,6 @@ class InvoiceItem
   end
 
   def quantity_sold
-    @quanity_sold||= invoice.successful? ? quantity : 0
+    @quanity_sold ||= invoice.successful? ? quantity : 0
   end
 end

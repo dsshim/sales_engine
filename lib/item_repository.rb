@@ -24,11 +24,11 @@ class ItemRepository
   end
 
   def most_revenue(quantity)
-    @most_revenue ||= items.max_by(quantity){|i| i.revenue}
+    @most_revenue ||= items.max_by(quantity){ |i| i.revenue }
   end
 
   def most_items(quantity)
-    @most_items ||= items.max_by(quantity){|i| i.quantity_sold}
+    @most_items ||= items.max_by(quantity){ |i| i.quantity_sold }
   end
 
   def all

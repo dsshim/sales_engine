@@ -6,7 +6,9 @@ class MerchantRepository
   attr_reader   :rows,
                 :merchants,
                 :engine
-  attr_accessor :most_items
+  attr_accessor :most_items,
+                :revenue,
+                :most_revenue
 
   def initialize(rows, engine)
     @rows = rows
@@ -23,7 +25,7 @@ class MerchantRepository
   end
 
   def all
-    merchants
+    Hash[merchants.map { |m| [m.id, m] }]
   end
 
   def random
@@ -32,6 +34,16 @@ class MerchantRepository
 
   def most_items(quantity)
     @most_items ||= calculate_most_items_by_merchant(quantity)
+  end
+
+  def revenue(date)
+    @revenue ||= all.map { |id, m| m.revenue(date)}.reduce(:+)
+  end
+
+  def most_revenue(quantity)
+    most = all.max_by(quantity) do |id, m|
+      m.revenue
+    end.flatten.drop(1)
   end
 
   def find_items_by_merchant_id(merchant_id)
@@ -100,14 +112,6 @@ class MerchantRepository
 
   def find_all_by_date_updated(updated_at)
     merchants.select { |merchant| merchant.updated_at == updated_at }
-  end
-
-  def revenue(date)
-    merchants.map { |merchant| merchant.revenue(date)}.reduce(:+)
-  end
-
-  def most_revenue(quantity)
-    merchants.max_by(quantity) { |i| i.revenue }
   end
 
   private

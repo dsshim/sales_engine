@@ -37,7 +37,7 @@ class Invoice
   end
 
   def successful?
-    @successful_transactions ||= transactions.any?{|t| t.successful? }
+    @successful_transactions ||= transactions.any? {|t| t.successful? }
   end
 
   def charge(data)
