@@ -1,5 +1,5 @@
 require_relative 'customer_repository'
-require 'pry'
+
 class Customer
 
   attr_reader :id,

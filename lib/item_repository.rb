@@ -1,7 +1,7 @@
 require_relative 'sales_engine'
 require_relative 'item'
 require 'bigdecimal'
-require'pry'
+
 class ItemRepository
 
   attr_accessor :rows, :items, :engine
