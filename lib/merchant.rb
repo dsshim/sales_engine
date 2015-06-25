@@ -11,7 +11,9 @@ class Merchant
 
   attr_accessor :items,
                 :invoices,
-                :invoice_items
+                :invoice_items,
+                :successful_invoices
+
 
   def initialize(row, repo)
     @repository = repo
@@ -33,7 +35,25 @@ class Merchant
     @invoice_items ||= repository.find_all_invoice_items
   end
 
+  def successful_invoices
+    @successful_invoices ||= successful_invoices
+  end
+
   def revenue(date = nil)
+    calculate_revenue(date)
+  end
+
+  def favorite_customer
+    find_favorite_customer
+  end
+
+  def customers_with_pending_invoices
+    pending_invoices
+  end
+
+  private
+
+  def calculate_revenue(date = nil )
     filtered = filter_transactions(date)
     ii = filtered.flatten.map(&:invoice).map(&:invoice_items)
     calculate_revenue_from_invoice_items(ii)
@@ -47,13 +67,13 @@ class Merchant
     BigDecimal.new("#{bd_sum}")
   end
 
-  def favorite_customer
+  def find_favorite_customer
     transactions = filter_transactions
     invoices = transactions.flatten.map(&:invoice)
     invoices.group_by(&:customer_id).sort_by {|value| -value.last.count }.flatten[1].customer
   end
 
-  def customers_with_pending_invoices
+  def pending_invoices
     pending = invoices.select do |i|
       successful = i.transactions.any? { |t| t.successful? }
       i if !successful
@@ -62,15 +82,19 @@ class Merchant
   end
 
   def filter_transactions(date = nil)
-    date ? invoices = filter_invoices(date) : invoices = repository.find_invoices_by_merchant_id(id)
-    invoices.map do |i|
+    inv = date ? filter_by_date(date) : invoices
+    successful_invoices(inv)
+  end
+
+  def successful_invoices(inv)
+    inv = inv.map do |i|
       i.transactions.select do |t|
         t.successful?
       end
     end
   end
 
-  def filter_invoices(date)
+  def filter_by_date(date)
     invoices.select { |invoice| Date.parse(invoice.created_at) == date }
   end
 end

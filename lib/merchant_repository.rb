@@ -3,9 +3,12 @@ require_relative 'merchant'
 
 class MerchantRepository
 
-  attr_reader :rows,
-              :merchants,
-              :engine
+  attr_reader   :rows,
+                :merchants,
+                :engine
+  attr_accessor :most_items,
+                :revenue,
+                :most_revenue
 
   def initialize(rows, engine)
     @rows = rows
@@ -22,11 +25,23 @@ class MerchantRepository
   end
 
   def all
-    merchants
+    Hash[merchants.map { |m| [m.id, m] }]
   end
 
   def random
     merchants.sample
+  end
+
+  def most_items(quantity)
+    @most_items ||= calculate_most_items_by_merchant(quantity)
+  end
+
+  def revenue(date)
+    @revenue ||= all.map { |id, m| m.revenue(date)}.reduce(:+)
+  end
+
+  def most_revenue(quantity)
+    @most_revenue ||= all.max_by(quantity) { |id, m| m.revenue }.flatten.drop(1)
   end
 
   def find_items_by_merchant_id(merchant_id)
@@ -97,15 +112,9 @@ class MerchantRepository
     merchants.select { |merchant| merchant.updated_at == updated_at }
   end
 
-  def revenue(date)
-    merchants.map { |merchant| merchant.revenue(date)}.reduce(:+)
-  end
+  private
 
-  def most_revenue(quantity)
-    merchants.max_by(quantity) { |i| i.revenue }
-  end
-
-  def most_items(quantity)
+  def calculate_most_items_by_merchant(quantity)
     merchant_quantity = merchants.map do |merchant|
       merchant.items.map do |item|
         item.quantity_sold

@@ -35,14 +35,11 @@ class Customer
   end
 
   def favorite_merchant
-    repository.find_merchant_by_id(get_merchant_id)[0]
-  end
-
-  def get_merchant_id
     invoice_id = successful_transactions.map(&:invoice_id)
     invoices = repository.find_invoices_by_invoice_id(invoice_id)
     groups = invoices.group_by {|invoice| invoice.merchant_id }
-    groups.max_by {|x| groups.count(x) }.first
+    merchant_id = groups.max_by {|x| groups.count(x) }.first
+    repository.find_merchant_by_id(merchant_id)[0]
   end
 
   def find_customer_id
