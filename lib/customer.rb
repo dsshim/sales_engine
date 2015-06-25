@@ -10,7 +10,8 @@ class Customer
               :repository,
               :invoice,
               :transactions,
-              :successful_transactions
+              :successful_transactions,
+              :find_favorite_merchant
 
   def initialize(row, repo)
     @repository = repo
@@ -35,11 +36,7 @@ class Customer
   end
 
   def favorite_merchant
-    invoice_id = successful_transactions.map(&:invoice_id)
-    invoices = repository.find_invoices_by_invoice_id(invoice_id)
-    groups = invoices.group_by {|invoice| invoice.merchant_id }
-    merchant_id = groups.max_by {|x| groups.count(x) }.first
-    repository.find_merchant_by_id(merchant_id)[0]
+    @find_favorite_merchant ||= find_favorite_merchant
   end
 
   def find_customer_id
@@ -48,5 +45,15 @@ class Customer
 
   def find_invoices_by_invoice_id
     repository.find_invoices_by_id(id)
+  end
+
+  private
+
+  def find_favorite_merchant
+    invoice_id = successful_transactions.map(&:invoice_id)
+    invoices = repository.find_invoices_by_invoice_id(invoice_id)
+    groups = invoices.group_by {|invoice| invoice.merchant_id }
+    merchant_id = groups.max_by {|x| groups.count(x) }.first
+    repository.find_merchant_by_id(merchant_id)[0]
   end
 end
