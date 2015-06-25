@@ -3,7 +3,6 @@ require_relative 'transaction'
 
 class TransactionRepository
 
-
   attr_accessor :engine,
                 :rows,
                 :transactions
@@ -31,7 +30,7 @@ class TransactionRepository
   end
 
   def find_invoices_by_invoice_id(id)
-    engine.find_inv_by_invoice_id(id)
+    engine.find_invoices_by_id(id)
   end
 
   def find_customer_by_customer_id(customer_id)
@@ -53,11 +52,24 @@ class TransactionRepository
   def find_by_expiration_date(credit_card_expiration_date)
     transactions.detect do |transaction|
       if transaction.credit_card_expiration_date.nil?
-        return "No Exp Date"
+       return "No Exp Date"
       else
         transaction.credit_card_expiration_date == credit_card_expiration_date
       end
     end
+  end
+
+  def create_transaction(data, id)
+    data = {
+      id:                           transactions.last.id + 1,
+      invoice_id:                   id,
+      credit_card_number:           data[:credit_card_number],
+      credit_card_expiration_date:  data[:credit_card_expiration_date],
+      result:                       data[:result],
+      created_at:                   Date.new,
+      updated_at:                   Date.new
+    }
+    transactions << Transaction.new(data, self)
   end
 
   def find_by_result(result)
@@ -76,8 +88,12 @@ class TransactionRepository
     transactions.select { |transaction| transaction.id == id }
   end
 
-  def find_all_by_invoice_id(invoice_id) #add test in trans_repo_test
+  def find_all_by_invoice_id(invoice_id)
     transactions.select { |transaction| transaction.invoice_id == invoice_id }
+  end
+
+  def find_multiple_transactions_by_invoice_id(ids)
+    ids.map { |id| find_all_by_invoice_id(id) }
   end
 
   def find_all_by_credit_card_number(credit_card)
@@ -89,13 +105,7 @@ class TransactionRepository
   end
 
   def find_all_by_expiration_date(expiration_date)
-    transactions.select do |transaction|
-      if transaction.credit_card_expiration_date.nil?
-        return "No Exp Date"
-      else
-        transaction.credit_card_expiration_date == expiration_date
-      end
-    end
+    transactions.select {|transaction| transaction.credit_card_expiration_date == expiration_date }
   end
 
   def find_all_by_date_created(created_at)
@@ -105,5 +115,4 @@ class TransactionRepository
   def find_all_by_date_updated(updated_at)
     transactions.select { |transaction| transaction.updated_at == updated_at }
   end
-
 end

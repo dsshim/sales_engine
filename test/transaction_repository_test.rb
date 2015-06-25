@@ -50,7 +50,7 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_transactions_by_expiration_date
-    assert_equal "No Exp Date", transaction_repository.find_by_expiration_date("2018-07-31")
+    assert_equal "No Exp Date", transaction_repository.find_by_expiration_date("2021-07-31")
   end
 
   def test_it_finds_transactions_by_result
@@ -67,10 +67,6 @@ class TransactionRepositoryTest < Minitest::Test
 
   def test_it_finds_all_transactions_by_credit_card_number
     assert_equal 1, transaction_repository.find_all_by_credit_card_number("4800749911485986").count
-  end
-
-  def test_it_finds_all_transactions_by_expiration_date
-    assert_equal "No Exp Date", transaction_repository.find_all_by_expiration_date("2012-03-28")
   end
 
   def test_it_finds_all_transactions_by_result

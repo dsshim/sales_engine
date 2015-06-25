@@ -8,7 +8,10 @@ class Item
               :merchant_id,
               :created_at,
               :updated_at,
-              :repository
+              :repository,
+              :invoice_items,
+              :revenue,
+              :quantity_sold
 
   def initialize(row, repo)
     @repository = repo
@@ -22,7 +25,15 @@ class Item
   end
 
   def invoice_items
-    repository.find_items_by_id(id)
+    @invoice_items ||= repository.find_items_by_id(id)
+  end
+
+  def revenue
+    @revenue ||= invoice_items.map { |ii| ii.value }.inject(0) { |acc, value| acc + value }
+  end
+
+  def quantity_sold
+    @quantity_sold ||= invoice_items.map { |ii| ii.quantity_sold }.inject(0) { |acc, value| acc + value }
   end
 
   def merchant
@@ -31,6 +42,16 @@ class Item
 
   def get_merchant_id
     repository.find_by_id(id).merchant_id
+  end
+
+  def best_day
+    dates = invoice_items.map { |ii| ii.invoice.created_at }
+    revenue = invoice_items.map do |ii|
+      ii.quantity * ii.unit_price
+    end
+    revenue_by_date = revenue.zip(dates).sort
+    max_revenue = revenue_by_date.pop
+    Date.parse(max_revenue[1])
   end
 end
 

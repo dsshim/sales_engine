@@ -3,14 +3,14 @@ require_relative 'invoice'
 
 class InvoiceRepository
 
+  attr_accessor :engine,
+                :rows,
+                :invoices
 
-  attr_accessor :sales_engine, :rows, :invoices
-
-  def initialize(rows, sales_engine)
+  def initialize(rows, engine)
     @rows = rows
-    @sales_engine = sales_engine
-    @invoices = []
-    invoice_parser
+    @engine = engine
+    @invoices = invoice_parser
   end
 
   def inspect
@@ -18,7 +18,30 @@ class InvoiceRepository
   end
 
   def invoice_parser
-    @invoices = rows.map{|row| Invoice.new(row,self)}
+    @invoices = rows.map{|row| Invoice.new(row, self)}
+  end
+
+  def create(data)
+    row = {
+      id:          invoices.last.id + 1,
+      customer_id: data[:customer].id,
+      merchant_id: data[:merchant].id,
+      status:      data[:status],
+      created_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}",
+    }
+    invoices << new_invoice = Invoice.new(row, self)
+    invoice_items = data[:items].map do |item|
+      quantity = 1
+      unit_price = item.unit_price
+      id = item.id
+      engine.create_invoice_items(id, row[:id].to_i, quantity, unit_price)
+    end
+    new_invoice
+  end
+
+  def create_transaction(data, id)
+    engine.create_transaction(data, id)
   end
 
   def all
@@ -30,39 +53,23 @@ class InvoiceRepository
   end
 
   def find_invoices_by_invoice_id(id)
-    sales_engine.find_invoices_by_invoice_id(id)
-  end
-
-  def find_invoices_by_id(id)
-    sales_engine.find_invoices_by_id(id)
+    engine.find_invoices_by_invoice_id(id)
   end
 
   def find_items_by_invoice_item(id)
-    sales_engine.find_invoice_items_by_id(id)
+    engine.find_invoice_items_by_id(id)
   end
 
-  def find_items_by_item_id(item_ids)
-    sales_engine.find_all_by_item_id(item_ids)
+  def find_customer_by_customer_id(id)
+    engine.find_customer_by_id(id)
   end
 
-  def find_customer_by_customer_id(customer_id)
-    sales_engine.find_customer_by_customer_id(customer_id)
-  end
-
-  def find_invoices_by_customer_id(id)
-    sales_engine.find_invoices_by_customer_id(id)
-  end
-
-  def find_invoice_items_by_id(id)
-    sales_engine.find_invoice_items_by_id(id)
-  end
-
-  def find_all_items_by_item_id(item_id)
-    sales_engine.find_items_by_item_id(item_id)
+  def find_all_items_by_item_id(id)
+    engine.find_items_by_item_id(id)
   end
 
   def find_merchant_invoices_by_id(id)
-    sales_engine.find_merchant_invoices_by_id(id)
+    engine.find_merchants_by_id(id)
   end
 
   def find_by_id(id)
@@ -93,6 +100,10 @@ class InvoiceRepository
     invoices.select { |invoice| invoice.id == id }
   end
 
+  def find_multiple_by_id(id)
+    id.map {|id| find_by_id(id) }
+  end
+
   def find_all_by_customer_id(customer_id)
     invoices.select { |invoice| invoice.customer_id == customer_id }
   end
@@ -109,8 +120,11 @@ class InvoiceRepository
     invoices.select { |invoice| invoice.created_at == created_at }
   end
 
+  def find_all_by_date_created_string_input(created_at)
+    invoices.select { |invoice| invoice.created_at.to_s.include?(created_at) }
+  end
+
   def find_all_by_date_updated(updated_at)
     invoices.select { |invoice| invoice.updated_at == updated_at }
   end
-
 end

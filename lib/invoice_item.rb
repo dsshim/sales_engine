@@ -10,7 +10,11 @@ class InvoiceItem
               :quantity,
               :item_id,
               :repository,
-              :invoice_id
+              :invoice_id,
+              :invoice,
+              :item,
+              :quantity_sold,
+              :value
 
   def initialize(row, repo)
     @repository = repo
@@ -24,18 +28,31 @@ class InvoiceItem
   end
 
   def invoice
-    repository.find_invoice_items_by_invoice_id_from_ii(id)
+    @invoice ||= repository.find_invoice_by_id(invoice_id)
   end
 
   def item
-    repository.find_item_by_item_id(get_item_id)
+    @item ||= repository.find_item_by_id(item_id)
   end
 
-  def get_item_id
-    invoice_items_by_item_id.map(&:item_id).uniq
+  def create_invoice_items(invoice_id, quantity, unit_price)
+    data = {
+      id:          invoice_items.last.id + 1,
+      invoice_id:  invoice_id.to_i,
+      quantity:    quantity,
+      unit_price:  unit_price,
+      created_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}"
+    }
+
+    invoice_items << InvoiceItem.new(data, self)
   end
 
-  def invoice_items_by_item_id
-    repository.find_all_by_item_id(item_id)
+  def value
+   @value ||= invoice.successful? ? unit_price * quantity : 0
+  end
+
+  def quantity_sold
+    @quanity_sold||= invoice.successful? ? quantity : 0
   end
 end

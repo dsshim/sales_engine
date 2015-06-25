@@ -7,7 +7,12 @@ class Invoice
                 :customer_id,
                 :id,
                 :status,
-                :repository
+                :repository,
+                :transactions,
+                :invoice_items,
+                :items,
+                :transactions,
+                :successful_transactions
 
   def initialize(row, repo)
     @repository = repo
@@ -24,39 +29,27 @@ class Invoice
   end
 
   def invoice_items
-    repository.find_items_by_invoice_item(id)
+    @invoice_items ||= repository.find_items_by_invoice_item(id)
   end
 
   def items
-    find_items_by_invoice_item_id
+    @items ||= invoice_items.map { |invoice_item| invoice_item.item }
   end
 
-  def find_invoices_by_id
-    repository.find_invoices_by_id(id)
+  def successful?
+    @successful_transactions ||= transactions.any?{|t| t.successful? }
   end
 
-  def find_invoice_items_by_invoice_id
-    repository.find_invoice_items_by_id(get_invoice_id)
-  end
-
-  def get_invoice_id
-    find_invoices_by_id.map(&:id).join.to_i
+  def charge(data)
+    repository.create_transaction(data, id)
   end
 
   def find_items_by_invoice_item_id
-    repository.find_items_by_item_id(get_item_ids)
-  end
-
-  def get_item_ids
-    find_invoice_items_by_invoice_id.map(&:item_id)
+    repository.find_items_by_item_id(id)
   end
 
   def customer
-    repository.find_customer_by_customer_id(get_customer_id)
-  end
-
-  def get_customer_id
-    repository.find_all_by_id(id).map(&:customer_id).join.to_i
+    repository.find_customer_by_customer_id(customer_id)
   end
 
   def merchant

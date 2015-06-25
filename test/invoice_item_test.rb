@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/invoice'
+require './lib/invoice_item_repository'
 
 class InvoiceItemTest < Minitest::Test
 
@@ -8,12 +9,12 @@ class InvoiceItemTest < Minitest::Test
 
   def setup
     @data = {
-      id: 1,
-      item_id: 530,
-      invoice_id: 2,
-      quantity: 9,
-      created_at: "2012-03-27 14:54:09 UTC",
-      updated_at: "2012-03-27 14:54:09 UTC"
+        id: 1,
+        item_id: 530,
+        invoice_id: 2,
+        quantity: 9,
+        created_at: "2012-03-27 14:54:09 UTC",
+        updated_at: "2012-03-27 14:54:09 UTC"
     }
   end
 
@@ -23,19 +24,22 @@ class InvoiceItemTest < Minitest::Test
     assert_equal 530, invoice_item.item_id
   end
 
-  def test_it_returns_a_collection_of_invoices
-    repository = Minitest::Mock.new
-    invoice_item = InvoiceItem.new(data, repository)
-    repository.expect(:find_invoice_items_by_invoice_id_from_ii, nil, [1])
-    invoice_item.invoice
-    repository.verify
+  def test_it_can_find_a_record
+    invoice_item = SalesEngine.new(data).invoice_item_repository.find_by_item_id(2)
+    expected = invoice_item.item.name
+    assert_equal "Item Autem Minima", expected
   end
 
-  # def test_it_returns_a_collection_of_items #rewrite with dummy data
-  #   repository = Minitest::Mock.new
-  #   invoice_item = InvoiceItem.new(data, repository)
-  #   repository.expect(:find_invoice_items_by_item_id, nil, [1])
-  #   invoice_item.item
-  #   repository.verify
-  # end
+  def test_it_returns_a_collection_of_invoices
+    invoice_items = SalesEngine.new(data).invoice_item_repository.find_all_by_quantity(10)
+    expected = invoice_items.size
+    assert_equal 2140, expected
+
+  end
+
+  def test_it_returns_a_collection_of_items
+    invoice_item = SalesEngine.new(data).invoice_item_repository.find_by_id(530)
+    expected = invoice_item.item.name
+    assert_equal "Item Facilis Sit", expected
+  end
 end
