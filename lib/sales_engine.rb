@@ -38,19 +38,23 @@ class SalesEngine
   end
 
   def customer_repository
-    @customer_repository ||= CustomerRepository.new(CSVParser.customer_rows, self)
+    @customer_repository ||=
+      CustomerRepository.new(CSVParser.customer_rows, self)
   end
 
   def merchant_repository
-    @merchant_repository ||= MerchantRepository.new(CSVParser.merchant_rows, self)
+    @merchant_repository ||=
+      MerchantRepository.new(CSVParser.merchant_rows, self)
   end
 
   def invoice_repository
-    @invoice_repository ||= InvoiceRepository.new(CSVParser.invoice_rows, self)
+    @invoice_repository ||=
+      InvoiceRepository.new(CSVParser.invoice_rows, self)
   end
 
   def invoice_item_repository
-    @invoice_item_repository ||= InvoiceItemRepository.new(CSVParser.invoice_items_rows, self)
+    @invoice_item_repository ||=
+      InvoiceItemRepository.new(CSVParser.invoice_items_rows, self)
   end
 
   def item_repository
@@ -58,7 +62,8 @@ class SalesEngine
   end
 
   def transaction_repository
-    @transaction_repository ||= TransactionRepository.new(CSVParser.transaction_rows, self)
+    @transaction_repository ||=
+      TransactionRepository.new(CSVParser.transaction_rows, self)
   end
 
   def find_merchants_by_id(id)
@@ -110,7 +115,8 @@ class SalesEngine
   end
 
   def create_invoice_items(id, invoice_id, quantity, unit_price)
-    invoice_item_repository.create_invoice_items(id, invoice_id, quantity, unit_price)
+    invoice_item_repository
+      .create_invoice_items(id, invoice_id, quantity, unit_price)
   end
 
   def find_all_by_item_id(item_ids)

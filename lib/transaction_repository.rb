@@ -46,7 +46,8 @@ class TransactionRepository
   end
 
   def find_by_credit_card_number(credit_card_number)
-    transactions.detect { |transaction| transaction.credit_card_number == credit_card_number }
+    transactions.detect { |transaction| transaction
+      .credit_card_number == credit_card_number }
   end
 
   def find_by_expiration_date(credit_card_expiration_date)
@@ -97,7 +98,8 @@ class TransactionRepository
   end
 
   def find_all_by_credit_card_number(credit_card)
-    transactions.select { |transaction| transaction.credit_card_number == credit_card }
+    transactions.select { |transaction| transaction
+      .credit_card_number == credit_card }
   end
 
   def find_all_by_result(result)
@@ -105,7 +107,8 @@ class TransactionRepository
   end
 
   def find_all_by_expiration_date(expiration_date)
-    transactions.select {|transaction| transaction.credit_card_expiration_date == expiration_date }
+    transactions.select {|transaction| transaction
+      .credit_card_expiration_date == expiration_date }
   end
 
   def find_all_by_date_created(created_at)

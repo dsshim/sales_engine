@@ -69,7 +69,8 @@ class Merchant
   def find_favorite_customer
     transactions = filter_transactions
     invoices = transactions.flatten.map(&:invoice)
-    invoices.group_by(&:customer_id).sort_by {|value| -value.last.count }.flatten[1].customer
+    invoices.group_by(&:customer_id).sort_by {|value| -value.last.count }
+      .flatten[1].customer
   end
 
   def pending_invoices

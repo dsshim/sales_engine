@@ -29,11 +29,13 @@ class Item
   end
 
   def revenue
-    @revenue ||= invoice_items.map { |ii| ii.value }.inject(0) { |acc, value| acc + value }
+    @revenue ||= invoice_items.map { |ii| ii.value }
+      .inject(0) { |acc, value| acc + value }
   end
 
   def quantity_sold
-    @quantity_sold ||= invoice_items.map { |ii| ii.quantity_sold }.inject(0) { |acc, value| acc + value }
+    @quantity_sold ||= invoice_items.map { |ii| ii.quantity_sold }
+      .inject(0) { |acc, value| acc + value }
   end
 
   def merchant

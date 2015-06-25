@@ -28,11 +28,13 @@ class Customer
 
   def transactions
     invoice_ids = find_invoices_by_invoice_id.map(&:id)
-    @transactions ||= repository.find_transactions_by_invoice_ids(invoice_ids).flatten
+    @transactions ||= repository
+      .find_transactions_by_invoice_ids(invoice_ids).flatten
   end
 
   def successful_transactions
-    @successful_transactions ||= transactions.select { |transaction| transaction.successful? }
+    @successful_transactions ||= transactions
+      .select { |transaction| transaction.successful? }
   end
 
   def favorite_merchant
