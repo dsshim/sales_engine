@@ -4,13 +4,14 @@ require_relative 'transaction'
 class TransactionRepository
 
 
-  attr_accessor :engine, :rows, :transactions
+  attr_accessor :engine,
+                :rows,
+                :transactions
 
   def initialize(rows, engine)
     @rows = rows
     @engine = engine
-    @transactions = []
-    transaction_parser
+    @transactions = transaction_parser
   end
 
   def inspect
