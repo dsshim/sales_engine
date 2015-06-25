@@ -1,6 +1,6 @@
 # Sales Engine
 
-This is a project I did together with [David Shim](https://github.com/dshim) at the end
+This is a project I did together with [David Shim](https://github.com/dsshim) at the end
 of our first module at the [Turing School of Software and Design](https://turing.io).
 The purpose of this project is to write a data reporting tool that manipulates and reports on merchant transactional data.
 
