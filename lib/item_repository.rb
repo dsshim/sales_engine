@@ -24,7 +24,7 @@ class ItemRepository
   end
 
   def all
-    Hash[items.map { |m| [m.id, m] }]
+    items
   end
 
   def random
@@ -32,12 +32,20 @@ class ItemRepository
   end
 
   def most_revenue(quantity)
-    @most_revenue ||= all.max_by(quantity){ |id, i| i.revenue }.flatten.drop(1)
+    @most_revenue ||= items.max_by(quantity){|i| i.revenue}
   end
 
   def most_items(quantity)
-    all.max_by(quantity) { |id, i| i.quantity_sold}.flatten
+    @most_items ||= items.max_by(quantity){|i| i.quantity_sold}
   end
+
+  # def most_revenue(quantity)
+  #   @most_revenue ||= all.max_by(quantity){ |id, i| i.revenue }.flatten.drop(1)
+  # end
+
+  # def most_items(quantity)
+  #   all.max_by(quantity) { |id, i| i.quantity_sold}.flatten
+  # end
 
   def get_invoice_items
     engine.get_invoice_items
