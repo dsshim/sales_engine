@@ -45,6 +45,12 @@ class Item
   end
 
   def best_day
+    get_best_day
+  end
+
+  private
+
+  def get_best_day
     dates = invoice_items.map { |ii| ii.invoice.created_at }
     revenue = invoice_items.map do |ii|
       ii.quantity * ii.unit_price
