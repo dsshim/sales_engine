@@ -8,8 +8,8 @@ class TransactionRepository
                 :transactions
 
   def initialize(rows, engine)
-    @rows = rows
-    @engine = engine
+    @rows         = rows
+    @engine       = engine
     @transactions = transaction_parser
   end
 

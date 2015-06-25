@@ -17,14 +17,14 @@ class InvoiceItem
               :value
 
   def initialize(row, repo)
-    @repository = repo
-    @id = row[:id].to_i
-    @item_id = row[:item_id].to_i
-    @invoice_id = row[:invoice_id].to_i
-    @quantity = row[:quantity].to_i
-    @unit_price = row[:unit_price].to_i
-    @created_at = row[:created_at]
-    @updated_at = row[:updated_at]
+    @repository    = repo
+    @id            = row[:id].to_i
+    @item_id       = row[:item_id].to_i
+    @invoice_id    = row[:invoice_id].to_i
+    @quantity      = row[:quantity].to_i
+    @unit_price    = row[:unit_price].to_i
+    @created_at    = row[:created_at]
+    @updated_at    = row[:updated_at]
   end
 
   def invoice
@@ -36,15 +36,7 @@ class InvoiceItem
   end
 
   def create_invoice_items(invoice_id, quantity, unit_price)
-    data = {
-      id:          invoice_items.last.id + 1,
-      invoice_id:  invoice_id.to_i,
-      quantity:    quantity,
-      unit_price:  unit_price,
-      created_at:  "#{Date.new}",
-      updated_at:  "#{Date.new}"
-    }
-
+    data
     invoice_items << InvoiceItem.new(data, self)
   end
 
@@ -54,5 +46,18 @@ class InvoiceItem
 
   def quantity_sold
     @quanity_sold ||= invoice.successful? ? quantity : 0
+  end
+
+  private
+
+  def data
+    data = {
+      id:          invoice_items.last.id + 1,
+      invoice_id:  invoice_id.to_i,
+      quantity:    quantity,
+      unit_price:  unit_price,
+      created_at:  "#{Date.new}",
+      updated_at:  "#{Date.new}"
+    }
   end
 end

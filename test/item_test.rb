@@ -1,6 +1,6 @@
-require "minitest/autorun"
-require "minitest/pride"
+require_relative 'test_helper.rb'
 require "./lib/item"
+
 class ItemTest < Minitest::Test
 
   attr_reader :data

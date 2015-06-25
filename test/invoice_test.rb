@@ -1,7 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper.rb'
 require './lib/invoice'
-require 'pry'
 
 class InvoiceTest < Minitest::Test
 

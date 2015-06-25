@@ -16,14 +16,6 @@ class SalesEngine
                 :item_repository,
                 :transaction_repository
 
-  attr_reader :customer_rows,
-              :merchant_rows,
-              :invoice_rows,
-              :invoice_items_rows,
-              :item_rows,
-              :transaction_rows,
-              :filepath
-
   def initialize(filepath = nil)
     @filepath = filepath
   end

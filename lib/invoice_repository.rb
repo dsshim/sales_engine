@@ -8,8 +8,8 @@ class InvoiceRepository
                 :invoices
 
   def initialize(rows, engine)
-    @rows = rows
-    @engine = engine
+    @rows     = rows
+    @engine   = engine
     @invoices = invoice_parser
   end
 

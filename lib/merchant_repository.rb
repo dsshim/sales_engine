@@ -115,14 +115,20 @@ class MerchantRepository
   private
 
   def calculate_most_items_by_merchant(quantity)
-    merchant_quantity = merchants.map do |merchant|
+    pairs = merchant_ids.zip(merchant_quantity)
+    top_pairs = pairs.sort_by(&:last).reverse.take(quantity)
+    top_pairs.map { |element| find_by_id(element[0]) }
+  end
+
+  def merchant_quantity
+    merchants.map do |merchant|
       merchant.items.map do |item|
         item.quantity_sold
       end.reduce(:+)
     end
-    merchant_ids = merchants.map(&:id)
-    pairs = merchant_ids.zip(merchant_quantity)
-    top_pairs = pairs.sort_by(&:last).reverse.take(quantity)
-    top_pairs.map { |element| find_by_id(element[0]) }
+  end
+
+  def merchant_ids
+    merchants.map(&:id)
   end
 end

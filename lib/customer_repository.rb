@@ -8,9 +8,9 @@ class CustomerRepository
                 :customers
 
   def initialize(rows, engine)
-    @rows = rows
-    @engine = engine
-    @customers = customer_parser
+    @rows        = rows
+    @engine      = engine
+    @customers   = customer_parser
   end
 
   def inspect

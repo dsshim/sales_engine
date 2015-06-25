@@ -1,6 +1,5 @@
 require 'csv'
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper.rb'
 require './lib/merchant'
 require './lib/merchant_repository'
 require './lib/sales_engine'

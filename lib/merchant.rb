@@ -54,8 +54,9 @@ class Merchant
 
   def calculate_revenue(date = nil )
     filtered = filter_transactions(date)
-    ii = filtered.flatten.map(&:invoice).map(&:invoice_items)
-    calculate_revenue_from_invoice_items(ii)
+    filtered_invoice_items = filtered
+      .flatten.map(&:invoice).map(&:invoice_items)
+    calculate_revenue_from_invoice_items(filtered_invoice_items)
   end
 
   def calculate_revenue_from_invoice_items(ii)

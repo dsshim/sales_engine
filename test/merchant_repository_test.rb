@@ -1,8 +1,7 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper.rb'
 require './lib/merchant_repository'
 require 'csv'
-require 'pry'
+
 
 class MerchantRepositoryTest < Minitest::Test
 

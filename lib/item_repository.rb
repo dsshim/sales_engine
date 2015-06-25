@@ -11,9 +11,9 @@ class ItemRepository
                 :most_revenue
 
   def initialize(rows, engine)
-    @rows = rows
+    @rows   = rows
     @engine = engine
-    @items = item_parser
+    @items  = item_parser
   end
 
   def inspect
