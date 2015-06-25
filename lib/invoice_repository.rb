@@ -32,10 +32,7 @@ class InvoiceRepository
     }
     invoices << new_invoice = Invoice.new(row, self)
     invoice_items = data[:items].map do |item|
-      quantity = 1
-      unit_price = item.unit_price
-      id = item.id
-      engine.create_invoice_items(id, row[:id].to_i, quantity, unit_price)
+      engine.create_invoice_items(item.id, row[:id].to_i, 1, item.unit_price)
     end
     new_invoice
   end
