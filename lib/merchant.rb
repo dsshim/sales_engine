@@ -62,8 +62,8 @@ class Merchant
   end
 
   def filter_transactions(date = nil)
-    date ? invoices = filter_invoices(date) : invoices = repository.find_invoices_by_merchant_id(id)
-    invoices.map do |i|
+    inv = date ? filter_invoices(date) : invoices
+    inv.map do |i|
       i.transactions.select do |t|
         t.successful?
       end
