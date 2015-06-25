@@ -1,5 +1,6 @@
 require_relative 'sales_engine'
 require_relative 'transaction'
+require 'pry'
 
 class TransactionRepository
 
@@ -52,7 +53,7 @@ class TransactionRepository
   def find_by_expiration_date(credit_card_expiration_date)
     transactions.detect do |transaction|
       if transaction.credit_card_expiration_date.nil?
-        return "No Exp Date"
+       return "No Exp Date"
       else
         transaction.credit_card_expiration_date == credit_card_expiration_date
       end

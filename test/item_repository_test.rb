@@ -3,10 +3,10 @@ require "minitest/pride"
 require "./lib/item_repository"
 class ItemRepositoryTest < Minitest::Test
 
-  attr_reader :item_repository, :sales_engine
+  attr_reader :item_repository, :sales_engine, :rows
 
   def setup
-    rows = CSV.open "./data/fixtures/item_test.csv", headers: true, header_converters: :symbol
+    @rows = CSV.open "./data/fixtures/item_test.csv", headers: true, header_converters: :symbol
     read_rows = rows.read
     @item_repository = ItemRepository.new(read_rows, sales_engine)
   end
@@ -17,7 +17,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_creates_items_by_taking_data_from_the_repo
-    assert_equal 40, item_repository.items.count
+    assert_equal 5, item_repository.items.count
   end
 
   def test_it_has_access_to_the_data
@@ -70,28 +70,36 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal date, item_repository.find_by_date_updated("2012-03-27 14:53:59 UTC").updated_at
   end
 
-  def test_it_finds_all_items_by_name # do we need to have this method?
-    assert_equal 1, item_repository.find_all_by_name("Item Dolor Odio").count
-  end
-
-  def test_it_finds_all_items_by_description # do we need this?
+  def test_it_finds_all_items_by_description
     description = "Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro."
     assert_equal 1, item_repository.find_all_by_description(description).count
   end
 
-  def test_it_finds_all_items_by_unit_price # do we need this?
-    assert_equal 1, item_repository.find_all_by_unit_price(31163).count
+  def test_it_finds_all_items_by_unit_price
+    assert_equal 1, item_repository.find_all_by_unit_price(68723).count
   end
 
   def test_it_finds_all_items_by_merchant_id
-    assert_equal 15, item_repository.find_all_by_merchant_id(1).count
+    assert_equal 5, item_repository.find_all_by_merchant_id(1).count
   end
 
   def test_it_finds_all_items_by_date_created
-    assert_equal 40, item_repository.find_all_by_date_created("2012-03-27 14:53:59 UTC").count
+    assert_equal 5, item_repository.find_all_by_date_updated("2012-03-27 14:53:59 UTC").count
   end
 
-  def test_it_finds_all_items_by_date_created
-    assert_equal 40, item_repository.find_all_by_date_updated("2012-03-27 14:53:59 UTC").count
+  def test_it_returns_top_items_ranked_by_most_total_revenue
+    sales_engine = SalesEngine.new(rows)
+    expected = sales_engine.item_repository
+                   .most_revenue(3).first.name
+
+    assert_equal "Item Dicta Autem", expected
+  end
+
+  def test_it_returns_top_items_ranked_by_most_sold
+    sales_engine = SalesEngine.new(rows)
+    expected = sales_engine.item_repository
+                   .most_items(3).first.name
+
+    assert_equal "Item Dicta Autem", expected
   end
 end

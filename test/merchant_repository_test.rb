@@ -2,15 +2,17 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/merchant_repository'
 require 'csv'
+require 'pry'
 
 class MerchantRepositoryTest < Minitest::Test
 
-  attr_reader :sales_engine, :merchant_repository
+  attr_reader :sales_engine, :merchant_repository, :rows
 
   def setup
-    rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
+    @rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
     @merchant_repository = MerchantRepository.new(rows, sales_engine)
     @sales_engine = sales_engine
+
   end
 
   def test_it_loads_data_on_initialize
@@ -18,7 +20,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_instantiates_the_merchants_when_initiliazed
-    assert_equal 39, merchant_repository.merchants.count
+    assert_equal 20, merchant_repository.merchants.count
   end
 
   def test_it_has_access_to_the_first_merchant
@@ -45,7 +47,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_merchants_by_name
-    assert_equal "Leffler, Rice and Leuschke", merchant_repository.find_by_name("Leffler, Rice and Leuschke").name
+    assert_equal "Tillman Group", merchant_repository.find_by_name("Tillman Group").name
   end
 
   def test_it_finds_merchants_by_date_created
@@ -65,6 +67,27 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_all_by_date_updated
-    assert_equal 12, merchant_repository.find_all_by_date_updated("2012-03-27 14:54:00 UTC").count
+    assert_equal 11, merchant_repository.find_all_by_date_updated("2012-03-27 14:54:00 UTC").count
+  end
+
+  def test_it_returns_top_merchant_instances_ranked_by_total_revenue
+    expected = SalesEngine.new(rows).merchant_repository
+                   .most_revenue(1).map { |merchant| merchant.name }.flatten
+
+    assert_equal "Dicki-Bednar", expected[0]
+  end
+
+  def test_it_returns_top_merchant_instances_ranked_by_total_items_sold
+    expected = SalesEngine.new(rows).merchant_repository
+                   .most_items(2).first.name
+
+    assert_equal "Kassulke, O'Hara and Quitzon", expected
+  end
+
+  def test_it_returns_total_revenue_for_the_date_all_merchants
+    expected = SalesEngine.new(rows).merchant_repository
+                   .revenue(Date.parse "Tue, 20 Mar 2012")
+
+    assert_equal BigDecimal.new("2549722.91"), expected
   end
 end

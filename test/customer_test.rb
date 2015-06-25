@@ -29,4 +29,20 @@ class CustomerTest < Minitest::Test
     customer.invoices
     repository.verify
   end
+
+ def test_it_returns_transactions_for_a_customer
+   sales_engine = SalesEngine.new(data)
+   expected = sales_engine.customer_repository.find_by_id(1)
+                  .transactions.size
+
+   assert_equal 7, expected
+ end
+
+ def test_it_returns_merchants_with_most_transactions_by_customer
+   sales_engine = SalesEngine.new(data)
+   expected = sales_engine.customer_repository.find_by_id(1)
+                  .favorite_merchant.name
+
+   assert_equal "Balistreri, Schaefer and Kshlerin", expected
+ end
 end
