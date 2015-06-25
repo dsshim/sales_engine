@@ -40,14 +40,6 @@ class ItemRepository
     @most_items ||= items.max_by(quantity){|i| i.quantity_sold}
   end
 
-  # def most_revenue(quantity)
-  #   @most_revenue ||= all.max_by(quantity){ |id, i| i.revenue }.flatten.drop(1)
-  # end
-
-  # def most_items(quantity)
-  #   all.max_by(quantity) { |id, i| i.quantity_sold}.flatten
-  # end
-
   def get_invoice_items
     engine.get_invoice_items
   end

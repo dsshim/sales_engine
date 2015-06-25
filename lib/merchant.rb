@@ -14,7 +14,6 @@ class Merchant
                 :invoice_items,
                 :successful_invoices
 
-
   def initialize(row, repo)
     @repository = repo
     @id = row[:id].to_i
