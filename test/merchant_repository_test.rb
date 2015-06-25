@@ -7,13 +7,13 @@ require 'pry'
 class MerchantRepositoryTest < Minitest::Test
 
   attr_reader :sales_engine,
-              :merchant_repository
+              :merchant_repository,
+              :rows
 
   def setup
     @rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
     @merchant_repository = MerchantRepository.new(rows, sales_engine)
     @sales_engine = sales_engine
-
   end
 
   def test_it_loads_data_on_initialize

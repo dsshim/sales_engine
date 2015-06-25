@@ -15,7 +15,7 @@ class ItemTest < Minitest::Test
       merchant_id:  1,
       created_at:   "2012-03-27 14:53:59 UTC",
       updated_at:   "2012-03-27 14:53:59 UTC"
-
+    }
   end
 
   def test_it_receives_data_at_initialize
