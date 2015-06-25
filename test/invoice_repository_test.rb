@@ -54,12 +54,13 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_invoices_by_date_created
-    assert_equal "2012-03-26 07:54:10 UTC", invoice_repository.find_by_date_created("2012-03-26 07:54:10 UTC").created_at
+    assert_equal "2012-03-26 07:54:10 UTC", invoice_repository
+      .find_by_date_created("2012-03-26 07:54:10 UTC").created_at
   end
 
   def test_it_finds_invoices_by_update_date
-    assert_equal "2012-03-10 10:54:10 UTC", invoice_repository.find_by_date_updated("2012-03-10 10:54:10 UTC").updated_at
-  end
+    assert_equal "2012-03-10 10:54:10 UTC", invoice_repository
+      .find_by_date_updated("2012-03-10 10:54:10 UTC").updated_at
 
   def test_it_finds_all_invoices_by_customer_id
     assert_equal 8, invoice_repository.find_all_by_customer_id(1).count
@@ -74,10 +75,13 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_all_invoices_by_date_created
-    assert_equal 1, invoice_repository.find_all_by_date_created("2012-03-13 16:54:10 UTC").count
+    assert_equal 1, invoice_repository
+      .find_all_by_date_created("2012-03-13 16:54:10 UTC").count
   end
 
   def test_it_finds_all_invoices_by_date_updated
-    assert_equal 1, invoice_repository.find_all_by_date_updated("2012-03-16 10:54:11 UTC").count
+    assert_equal 1, invoice_repository
+      .find_all_by_date_updated("2012-03-16 10:54:11 UTC").count
   end
 end
+

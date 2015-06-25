@@ -1,6 +1,5 @@
 require_relative 'sales_engine'
 require_relative 'transaction'
-require 'pry'
 
 class TransactionRepository
 

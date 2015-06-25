@@ -1,5 +1,6 @@
 require_relative 'sales_engine'
 require_relative 'item'
+require 'bigdecimal'
 
 class ItemRepository
 
