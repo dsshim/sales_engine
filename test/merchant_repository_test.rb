@@ -32,10 +32,6 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 'Klein, Rempel and Jones', merchant_repository.merchants[1].name
   end
 
-  def test_it_finds_and_returns_all_customers
-    assert_equal merchant_repository.merchants, merchant_repository.all
-  end
-
   def test_it_finds_a_random_merchant
     first_merchant = merchant_repository.random
     second_merchant = merchant_repository.random
