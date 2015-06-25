@@ -23,20 +23,20 @@ class ItemRepository
     rows.map { |row| Item.new(row, self) }
   end
 
-  def most_revenue(quantity)
-    @most_revenue ||= items.max_by(quantity){ |i| i.revenue }
-  end
-
-  def most_items(quantity)
-    @most_items ||= items.max_by(quantity){ |i| i.quantity_sold }
-  end
-
   def all
-    items
+    Hash[items.map { |m| [m.id, m] }]
   end
 
   def random
     items.sample
+  end
+
+  def most_revenue(quantity)
+    @most_revenue ||= all.max_by(quantity){ |id, i| i.revenue }.flatten.drop(1)
+  end
+
+  def most_items(quantity)
+    all.max_by(quantity) { |id, i| i.quantity_sold}.flatten
   end
 
   def get_invoice_items

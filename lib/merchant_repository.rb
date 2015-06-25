@@ -41,9 +41,7 @@ class MerchantRepository
   end
 
   def most_revenue(quantity)
-    most = all.max_by(quantity) do |id, m|
-      m.revenue
-    end.flatten.drop(1)
+    @most_revenue ||= all.max_by(quantity) { |id, m| m.revenue }.flatten.drop(1)
   end
 
   def find_items_by_merchant_id(merchant_id)
