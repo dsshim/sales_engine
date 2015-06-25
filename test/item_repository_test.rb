@@ -8,7 +8,8 @@ class ItemRepositoryTest < Minitest::Test
   def setup
     @rows = CSV.open "./data/fixtures/item_test.csv", headers: true, header_converters: :symbol
     read_rows = rows.read
-    @item_repository = ItemRepository.new(read_rows, sales_engine)
+    @item_repository ||= ItemRepository.new(read_rows, sales_engine)
+    @sales_engine = SalesEngine.new(rows)
   end
 
   def test_it_loads_on_initialize
@@ -17,7 +18,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_creates_items_by_taking_data_from_the_repo
-    assert_equal 5, item_repository.items.count
+    assert_equal 20, item_repository.items.count
   end
 
   def test_it_has_access_to_the_data
@@ -80,15 +81,14 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_all_items_by_merchant_id
-    assert_equal 5, item_repository.find_all_by_merchant_id(1).count
+    assert_equal 15, item_repository.find_all_by_merchant_id(1).count
   end
 
   def test_it_finds_all_items_by_date_created
-    assert_equal 5, item_repository.find_all_by_date_updated("2012-03-27 14:53:59 UTC").count
+    assert_equal 20, item_repository.find_all_by_date_updated("2012-03-27 14:53:59 UTC").count
   end
 
   def test_it_returns_top_items_ranked_by_most_total_revenue
-    sales_engine = SalesEngine.new(rows)
     expected = sales_engine.item_repository
                    .most_revenue(3).first.name
 
@@ -96,7 +96,6 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_returns_top_items_ranked_by_most_sold
-    sales_engine = SalesEngine.new(rows)
     expected = sales_engine.item_repository
                    .most_items(3).first.name
 

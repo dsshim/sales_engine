@@ -12,8 +12,8 @@ class MerchantRepositoryTest < Minitest::Test
 
   def setup
     @rows = CSV.open "./data/fixtures/merchants_test.csv", headers: true, header_converters: :symbol
-    @merchant_repository = MerchantRepository.new(rows, sales_engine)
-    @sales_engine = sales_engine
+    @merchant_repository ||= MerchantRepository.new(rows, sales_engine)
+    @sales_engine = SalesEngine.new(rows)
   end
 
   def test_it_loads_data_on_initialize
@@ -68,21 +68,21 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_returns_top_merchant_instances_ranked_by_total_revenue
-    expected = SalesEngine.new(rows).merchant_repository
+    expected = sales_engine.merchant_repository
                    .most_revenue(1).map { |merchant| merchant.name }.flatten
 
     assert_equal "Dicki-Bednar", expected[0]
   end
 
   def test_it_returns_top_merchant_instances_ranked_by_total_items_sold
-    expected = SalesEngine.new(rows).merchant_repository
+    expected = sales_engine.merchant_repository
                    .most_items(2).first.name
 
     assert_equal "Kassulke, O'Hara and Quitzon", expected
   end
 
   def test_it_returns_total_revenue_for_the_date_all_merchants
-    expected = SalesEngine.new(rows).merchant_repository
+    expected = sales_engine.merchant_repository
                    .revenue(Date.parse "Tue, 20 Mar 2012")
 
     assert_equal BigDecimal.new("2549722.91"), expected
